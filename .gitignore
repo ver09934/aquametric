@@ -1,0 +1,8 @@
+# python files/dirs
+*.pyc
+__pycache__
+venv/
+
+# editor files/dirs
+*.sw*
+.vscode
