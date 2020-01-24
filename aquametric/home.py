@@ -46,4 +46,7 @@ def submit():
 
 @bp.route('/log')
 def log():
-    return send_file("../test.txt")
+    try:
+        return send_file("../test.txt")
+    except FileNotFoundError:
+        return ("Logfile does not exist.")
