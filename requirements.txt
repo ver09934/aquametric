@@ -2,3 +2,4 @@ flask
 numpy
 matplotlib
 pandas
+requests

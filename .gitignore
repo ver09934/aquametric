@@ -6,3 +6,6 @@ venv/
 # editor files/dirs
 *.sw*
 .vscode
+
+# test stuff
+/test.txt
