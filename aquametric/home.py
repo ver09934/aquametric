@@ -39,7 +39,8 @@ def test():
 def submit():
     content = request.get_json(silent=False)
     # return jsonify({"uuid":uuid})
-    with open("test.txt", "a") as f:
+    # with open("test.txt", "a") as f:
+    with open(os.path.join(os.path.dirname(__file__), "test.txt") "a") as f:
         f.write(str(content))
         f.write("\n")
     return jsonify({"Success": True})
