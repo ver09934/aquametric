@@ -8,4 +8,4 @@ venv/
 .vscode
 
 # test stuff
-/test.txt
+test.txt
