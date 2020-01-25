@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from io import BytesIO
 import os
+import datetime
 
 bp = Blueprint(__name__, __name__)
 
@@ -42,6 +43,8 @@ def submit():
     # return jsonify({"uuid":uuid})
     # with open("test.txt", "a") as f:
     with open(os.path.join(os.path.dirname(__file__), "test.txt"), "a") as f:
+        f.write(datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S"))
+        f.write(" ")
         f.write(str(content))
         f.write("\n")
     return jsonify({"Success": True})
