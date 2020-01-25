@@ -49,6 +49,6 @@ def submit():
 @bp.route('/log')
 def log():
     try:
-        return send_file("../test.txt")
+        return send_file(os.path.join(os.path.dirname(__file__), "test.txt"))
     except FileNotFoundError:
         return ("Logfile does not exist.")
