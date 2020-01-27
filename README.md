@@ -28,3 +28,15 @@ $ flask run
 * [ ] Create a way to submit data to the database via an HTTP request
 * [ ] Create a unit list page (either list-based or map-based)
 * [ ] Create a unit page, with either matplotlib (noninteractive) or javascript (interactive) plots
+
+## Apache
+
+I suspect that the problem was just the virtualhost configuration, but here are all the steps that were taken:
+
+* `sudo apt install apache2-dev`
+* install `mod_wsgi` in `venv`
+* `sudo adduser $USER www-data`
+* `sudo chown -R flask-project-dir www-data:www-data` and `sudo chmod -R g+rw flask-project-dir`
+* Make dirs/files in code absolute using `os.path.join()` and `os.path.dirname(__file__)`
+    * See <https://modwsgi.readthedocs.io/en/develop/user-guides/application-issues.html#application-working-directory>
+    * See <https://modwsgi.readthedocs.io/en/develop/user-guides/application-issues.html#access-rights-of-apache-user>
