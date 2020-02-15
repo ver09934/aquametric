@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Index Page</title>
+        <title>Test Page</title>
         <style>
             h1 {
                 font-family: Calibri;
@@ -20,7 +20,7 @@
     </head>
     <body>
         <h1>Aquametric</h1>
-        <img src="/graph.png"></img>
+        <img src="{{ url_for('test.graph') }}"></img>
         <br/>
         {{ table|safe }}
     </body>
