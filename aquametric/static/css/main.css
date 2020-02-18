@@ -1,0 +1,112 @@
+@font-face {
+    font-family: 'BebasNeue-Regular';
+    src: url('webfonts/39EBBB_0_0.eot');
+    src: url('webfonts/39EBBB_0_0.eot') format('embedded-opentype'),
+         url('webfonts/39EBBB_0_0.woff2') format('woff2'),
+         url('webfonts/39EBBB_0_0.woff') format('woff'),
+         url('webfonts/39EBBB_0_0.ttf') format('truetype');
+}
+
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+body{
+	margin:0;
+	display: block;
+	overflow: hidden;
+}
+
+#navbar {
+	overflow: hidden;
+  	padding: 10px;
+	background-color: #ffffff;
+}
+
+#items {
+    margin-top:10px;
+	float: right;
+}
+
+#logo {
+	float: left;
+    padding-left: 15px;
+    padding-top: 5px;
+}
+
+#photo {
+    margin-top:30px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+#info {
+    padding: 25px;
+	display: flex;
+	flex-direction: column;
+	background-color: #ededed;
+	flex-basis: 20%;
+	border-right-style: solid;
+	border-right-width: 12px;
+	border-right-color: white;
+}
+
+
+m {
+	font-family: "BebasNeue-Regular";
+	font-size: 25px;
+	padding-right: 30px;
+}
+#datatable{
+    background-color: white;
+    padding:15px;
+    margin-top:20px;
+    border-radius: 10px;
+}
+
+#map {
+	-webkit-filter: constrast(110%); /* Safari 6.0 - 9.0 */
+  	filter: contrast(110%);
+	position: inherit; top:0; bottom:0; right:0; left:0;
+    width: calc(80% - 62px);
+    height: calc(100% - 15px);
+}
+
+#grapharea {
+    width: calc(80% - 94px);
+}
+
+.graph {
+    height:200px;
+    width: 100%;
+    background-color: #ededed;
+    margin-bottom: 12px;
+    border-radius: 10px;
+}
+
+th {
+	font-family: "BebasNeue-Regular";
+	font-size: 30px;
+    text-align: left;
+    font-weight: 10;
+}
+
+.value {
+    text-align: right;
+}
+
+#title {
+	display: inline-block;
+	font-family: "BebasNeue-Regular";
+	font-size: 45px;
+}
+
+#idnum {
+	font-family: "Roboto";
+    font-weight: 500;
+	font-size: 15px;
+}
+
+#main {
+	display:flex;
+	width:100%;
+	height: calc(100vh - 59px);
+}
