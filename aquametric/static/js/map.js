@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 var stageMarker = L.icon({
-    iconUrl: 'images/stageMarker.png',
+    iconUrl: '/static/images/stageMarker.png',
 
     iconSize:     [28.8, 45], // size of the icon
     iconAnchor:   [16, 50], // point of the icon which will correspond to marker's location
