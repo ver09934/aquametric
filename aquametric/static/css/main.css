@@ -50,16 +50,18 @@ body{
 }
 
 
-m {
+#download {
 	font-family: "BebasNeue-Regular";
 	font-size: 25px;
 	padding-right: 30px;
 }
+
 #datatable{
     background-color: white;
     padding:15px;
     margin-top:20px;
-    border-radius: 10px;
+	border-radius: 10px;
+	color: lightgray;
 }
 
 #map {
@@ -97,16 +99,30 @@ th {
 	display: inline-block;
 	font-family: "BebasNeue-Regular";
 	font-size: 45px;
+	color: lightgray;
 }
 
 #idnum {
 	font-family: "Roboto";
     font-weight: 500;
 	font-size: 15px;
+	color: lightgray;
 }
 
 #main {
 	display:flex;
 	width:100%;
 	height: calc(100vh - 59px);
+}
+
+#flash {
+	background-color: rgba(255,255,255,1);
+	display: none;
+	position: absolute;
+	height: 100%;
+	width: calc(20% + 62px);
+	min-width: 260px;
+	top: 70px;
+	left: 0px;
+	z-index: 99;
 }

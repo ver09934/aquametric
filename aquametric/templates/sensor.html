@@ -8,15 +8,15 @@
         <div id="navbar">
             <div id="logo"><img height="44" alt="logo" src="{{ url_for('static', filename='images/Aquametric-01.svg') }}"></div>
             <div id="items">
-                <m id="download">Download Data</m>
+                <div id="download">Download Data</div>
             </div>
         </div>
         <div id="main">
-            <div id="flash" style="background-color:rgba(255,255,255,1); display: none; position:absolute; height: 100%; width:27.5%; min-width: 260px; top:70px; left:0px; z-index: 99;"></div>
+            <div id="flash"></div>
             <div id="info">
-                <div id="title" style="color:lightgray;">Select a sensor</div>
-                <div id="idnum" style="color:lightgray;">#000</div>
-                <table id="datatable" style="color:lightgray;">
+                <div id="title">Select a sensor</div>
+                <div id="idnum">#000</div>
+                <table id="datatable">
                     <tr>
                         <th><i class="fas fa-water"></i></th>
                         <th>Stage Height</th>
