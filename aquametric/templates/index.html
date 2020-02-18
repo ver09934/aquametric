@@ -1,63 +1,50 @@
 <!DOCTYPE html>
-
-<head>
-<link rel="stylesheet" href="main.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
-
-<script src="https://kit.fontawesome.com/558068c264.js" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
-<script src="map.js"></script>
-</head>
-
-<body>
-<div id="navbar">
-    <div id="logo"><img height="44" alt="logo" src="images/Aquametric-01.svg"></div>
-    <div id="items">
-        <m id="download">Download Data</m>
-    </div>
-</div>
-    
-<div id="main">
-    <div id="flash" style="background-color:rgba(255,255,255,1); display: none; position:absolute; height: 100%; width:27.5%; min-width: 260px; top:70px; left:0px; z-index: 99;"></div>
-
-    <div id="info">
-        <div id="title" style="color:lightgray;">Select a sensor</div>
-
-        <div id="idnum" style="color:lightgray;">#000</div>
-        
-        <table id="datatable" style="color:lightgray;">
-            <tr>
-                <th><i class="fas fa-water"></i></th>
-                <th>Stage Height</th>
-                <th class="value">32 cm</th>
-            </tr>
-            <tr>
-                <th><i class="fas fa-thermometer-three-quarters"></i></th>
-                <th>Temperature</th>
-                <th class="value">12°C</th>
-            </tr>
-            <tr>
-                <th><i class="fas fa-wind"></i></th>
-                <th>Turbidity</th>
-                <th class="value">35%</th>
-            </tr>
-            <tr>
-                <th><i class="fas fa-tachometer-alt"></i></th>
-                <th>Conductivity</th>
-                <th class="value">12%</th>
-            </tr>
-            
-            
-        </table>
-        
-        <img id="photo" src="images/sensor-placeholder.jpg">
-                
-    </div>
-        
-    <div id="map"></div>
-</div>
-    
-
-    
-</body>
+<html>
+    <head>
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+        <script src="https://kit.fontawesome.com/558068c264.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+        <script src="map.js"></script>
+    </head>
+    <body>
+        <div id="navbar">
+            <div id="logo"><img height="44" alt="logo" src="images/Aquametric-01.svg"></div>
+            <div id="items">
+                <m id="download">Download Data</m>
+            </div>
+        </div>
+        <div id="main">
+            <div id="flash" style="background-color:rgba(255,255,255,1); display: none; position:absolute; height: 100%; width:27.5%; min-width: 260px; top:70px; left:0px; z-index: 99;"></div>
+            <div id="info">
+                <div id="title" style="color:lightgray;">Select a sensor</div>
+                <div id="idnum" style="color:lightgray;">#000</div>
+                <table id="datatable" style="color:lightgray;">
+                    <tr>
+                        <th><i class="fas fa-water"></i></th>
+                        <th>Stage Height</th>
+                        <th class="value">32 cm</th>
+                    </tr>
+                    <tr>
+                        <th><i class="fas fa-thermometer-three-quarters"></i></th>
+                        <th>Temperature</th>
+                        <th class="value">12°C</th>
+                    </tr>
+                    <tr>
+                        <th><i class="fas fa-wind"></i></th>
+                        <th>Turbidity</th>
+                        <th class="value">35%</th>
+                    </tr>
+                    <tr>
+                        <th><i class="fas fa-tachometer-alt"></i></th>
+                        <th>Conductivity</th>
+                        <th class="value">12%</th>
+                    </tr>
+                </table>
+                <img id="photo" src="images/sensor-placeholder.jpg">     
+            </div>
+            <div id="map"></div>
+        </div>    
+    </body>
+</html>
