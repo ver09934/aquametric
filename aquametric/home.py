@@ -1,6 +1,5 @@
-from flask import Blueprint, render_template, jsonify, request, send_file
+from flask import Blueprint, current_app, jsonify, render_template, request, send_file
 import os
-import datetime
 
 bp = Blueprint('home', __name__)
 
@@ -15,19 +14,11 @@ def sensor():
 @bp.route('/submit', methods=['GET', 'POST'])
 def submit():
     content = request.get_json(silent=False)
-
-    # TODO: Parse json to determine log file name
-    # TODO: Check if is valid JSON
-    # TODO: Check if json contains an ID string
-
     with open(os.path.join(os.path.dirname(__file__), "test.txt"), "a") as f:
         f.write(str(content).rstrip())
         f.write("\n")
-    
     return jsonify({"Success": True})
 
-# TODO: Unit page will have links to raw log files
-# TODO: Have JSON and CSV download options (CSV auto-generated on the fly...)
 @bp.route('/log')
 def log():
     try:
@@ -35,7 +26,23 @@ def log():
     except FileNotFoundError:
         return ("Logfile does not exist.")
 
+@bp.route('/submit-new', methods=['GET', 'POST'])
+def submit_new():
+
+    content = request.get_json(silent=False)
+
+    # TODO: Parse json to determine log file name
+    # TODO: Check if is valid JSON
+    # TODO: Check if json contains an ID string
+
+    data_dir = current_app.config["DATA_DIR"]
+
+    with open(os.path.join(os.path.dirname(__file__), "test.txt"), "a") as f:
+        f.write(str(content).rstrip())
+        f.write("\n")
+    
+    return jsonify({"Success": True})
+
 @bp.route('/test')
 def test():
-    from flask import current_app
-    return current_app.config["DATA_DIR"]
+    return "Testing!"

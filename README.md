@@ -2,34 +2,38 @@
 
 Stream stage monitoring.
 
-## Running (Development)
-
-Create a virtual environment:
-
-```bash
-$ python3 -m venv venv
-$ . venv/bin/activate
-$ pip install -r requirements.txt
-```
-
-Run the flask application:
-
-```bash
-$ export FLASK_ENV=development
-$ export FLASK_APP=aquametric
-$ flask run
-```
-
 ## TODO
 
-* [ ] Figure out how unit configuration is going to work
-    * Will the unit list be stored on the server, or will any new unit be allowed to add data to the database, and in doing so be added to the unit list?
-* [ ] Create a way to interact with a MySQL or SQLite database
-* [ ] Create a way to submit data to the database via an HTTP request
-* [ ] Create a unit list page (either list-based or map-based)
-* [ ] Create a unit page, with either matplotlib (noninteractive) or javascript (interactive) plots
+* [ ] Get submission to separate unit files working
+    * Based off ID specified in post request (remember to convert to int first!)
+    * Don't break the server (write a separate submit function and swap once working)
+* [ ] Add unit configuration file for maps code to read
+* [ ] Add URL args for sensor ID to sensor and plot pages
+    * [ ] Graphs will also need an arg for metric to plot
+    * [ ] Add logfile conversion to CSV (on-the-fly)
+        * [ ] Add data download links on unit pages
+    * [ ] Plots will need to parse time strings into `datetime`s
+* [ ] Improve log conversion and submit tests
+    * [ ] Run the log conversion on the server
+    * [ ] Pass file to convert as command line arg
+    * [ ] Write to new file, `"{}-new.{}".format(basename, extension)`
+* [ ] Add configuration based off environment variables
+* [ ] Add "about" page (as linked-to on currently deployed sensor)
 
-## Apache
+## Setup
+
+* Add config through environment variables (TODO: Describe)
+* Add unit list `JSON` file (TODO: Describe)
+* Deploy a sensor unit (TODO: Get sensor code into version control)
+
+## Running (Development)
+
+```bash
+$ chmod +x run.sh
+$ ./run.sh
+```
+
+## Apache Adventures
 
 I suspect that the problem was just the virtualhost configuration, but here are all the steps that were taken:
 
@@ -43,4 +47,4 @@ I suspect that the problem was just the virtualhost configuration, but here are 
 
 ## Python `JSON` Notes
 
-* TODO
+* Hello, `json.dumps`!

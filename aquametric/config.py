@@ -1,7 +1,5 @@
 import os
 
-# TODO: Use environment variables for data dir name, etc.
-
 class Config:
     
     TESTING = True
