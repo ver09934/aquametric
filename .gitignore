@@ -7,5 +7,7 @@ venv/
 *.sw*
 .vscode
 
-# test stuff
+# data/config
 test.txt
+data/
+sensors.json
