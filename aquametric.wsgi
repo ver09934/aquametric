@@ -6,3 +6,4 @@ sys.path.insert(0, path)
 
 from aquametric import create_app
 application = create_app()
+

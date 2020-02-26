@@ -1,8 +1,4 @@
-from flask import Blueprint, make_response, render_template, jsonify, request, send_file
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-from io import BytesIO
+from flask import Blueprint, render_template, jsonify, request, send_file
 import os
 import datetime
 
@@ -22,9 +18,9 @@ def submit():
     # return jsonify({"uuid":uuid})
     # with open("test.txt", "a") as f:
     with open(os.path.join(os.path.dirname(__file__), "test.txt"), "a") as f:
-        f.write(datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S"))
-        f.write(" ")
-        f.write(str(content))
+        # f.write(datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S"))
+        # f.write(" ")
+        f.write(str(content).rstrip())
         f.write("\n")
     return jsonify({"Success": True})
 
@@ -35,33 +31,20 @@ def log():
     except FileNotFoundError:
         return ("Logfile does not exist.")
 
-'''
-@bp.route('/')
-def index():
-    return render_template('index.html', table=get_table())
+@bp.route('/convertlogs')
+def convertlogs():
+    with open(os.path.join(os.path.dirname(__file__), "test.txt"), "r") as f:
+        lines_to_write = ["{" + "{".join(line.split("{")[1:]) for line in f.readlines() if "Measurement" in line]
+        # NOTE: readlines does not rstrip()
+    # Add jsonification step
+    with open(os.path.join(os.path.dirname(__file__), "test.txt"), "w") as f:
+        for line in lines_to_write:
+            f.write(line)
+    return "Finished!"
 
-def get_table():
-    # df = pd.DataFrame([i**2 for i in range(11)])
-    df = pd.DataFrame(np.random.randint(low=1, high=100, size=10))
-    return df.to_html()
-
-@bp.route('/graph.png')
+@bp.route('/test')
 def test():
-
-    img_io = BytesIO()
-
-    plt.clf()
-    
-    x = np.linspace(0, 30, num=30)
-    # y = np.sin(x)
-    y = np.random.randint(low=1, high=100, size=len(x))
-    plt.plot(x, y, 'go-')
-    plt.title("Real Aquametric Data")
-    plt.savefig(img_io, format='png')
-
-    img_io.seek(0)
-
-    response = make_response(img_io.getvalue())
-    response.headers['Content-Type'] = 'image/png'
-    return response
-'''
+    from flask import current_app
+    print(current_app.config)
+    return current_app.config["DATA_DIR"]
+    # return current_app.config["DATA_DIR"]
