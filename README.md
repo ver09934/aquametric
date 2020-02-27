@@ -4,13 +4,13 @@ Stream stage monitoring.
 
 ## TODO
 
-* [ ] Get submission to separate unit files working
-    * Based off ID specified in post request (remember to convert to int first!)
-    * Don't break the server (write a separate submit function and swap once working)
-* [ ] Add unit configuration file for maps code to read
+* [x] Get submission to separate unit files working
+    * [x] Based off ID specified in post request
+    * [ ] Don't break the server (write a separate submit function and swap once working)
+* [x] Add unit configuration file for maps code to read
 * [ ] Add URL args for sensor ID to sensor and plot pages
     * [ ] Graphs will also need an arg for metric to plot
-    * [ ] Add logfile conversion to CSV (on-the-fly)
+    * [x] Add logfile conversion to CSV (on-the-fly)
         * [ ] Add data download links on unit pages
     * [ ] Plots will need to parse time strings into `datetime`s
 * [ ] Improve log conversion and submit tests
@@ -41,12 +41,14 @@ Stream stage monitoring.
         "001": {
             "lat": 42.784723,
             "lng": -73.842862,
-            "img": "/static/images/example-1.png"
+            "prettyname": "Test Sensor 1",
+            "img": "https://i.picsum.photos/id/724/500/300.jpg"
         },
         "002": {
             "lat": 43.100000,
             "lng": -74.10000,
-            "img": "/static/images/example-2.png"
+            "prettyname": "Test Sensor 2",
+            "img": "https://i.picsum.photos/id/323/500/300.jpg"
         }
     }
     ```

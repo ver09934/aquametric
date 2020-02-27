@@ -29,11 +29,27 @@ $(document).ready(function(){
 
         // e is the marker index
         // val is the click data from leaflet
-        function wrapper(e){ 
+        function wrapper(sensorID) { 
             return function(val) {
+                
+                console.log("Sensor ID: " + sensorID);
+                console.log("Click data:");
                 console.log(val);
-                console.log(e);
-                markerOnClick();
+
+                document.getElementById("flash").style.display = "block";
+                $("#flash").fadeIn(350);
+
+                document.getElementById('photo').src = data[sensorID]["img"];
+                document.getElementById("title").innerHTML = data[sensorID]["prettyname"];
+                document.getElementById("idnum").innerHTML = "#" + sensorID;
+
+                // TODO: Apply styles directly from CSS instead
+                document.getElementById('title').style.color = "black";
+                document.getElementById('idnum').style.color = "#666666";
+
+                $("#flash").fadeOut(350);
+
+                // markerOnClick();
             };
         }
 
@@ -44,11 +60,13 @@ $(document).ready(function(){
         // Will need to figure our how this whole system is going to handle the datetimes...
         // The datetime thing will require some thought...
 
+        /*
         function markerOnClick() {
             document.getElementById("flash").style.display = "block";
             $("#flash").fadeIn(350);
             $("#flash").fadeOut(350);
         }
+        */
 
     });
 

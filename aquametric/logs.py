@@ -106,6 +106,10 @@ def log_csv():
     response.headers['Content-Type'] = 'text/plain'
     return response
 
+@bp.route("/data/<sensor_id>/current")
+def current_data():
+    return "Testing!"
+
 @bp.route('/test')
 def test():
     # To demonstrate that view functions can still be called within the module...
