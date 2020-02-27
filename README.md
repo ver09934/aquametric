@@ -19,6 +19,8 @@ Stream stage monitoring.
     * [ ] Write to new file, `"{}-new.{}".format(basename, extension)`
 * [ ] Add configuration based off environment variables
 * [ ] Add "about" page (as linked-to on currently deployed sensor)
+* [ ] Add cron job on server to back up data directory
+    * Remove old test files once everything is migrated
 
 ## Setup
 
@@ -47,4 +49,5 @@ I suspect that the problem was just the virtualhost configuration, but here are 
 
 ## Python `JSON` Notes
 
-* Hello, `json.dumps`!
+* `json.load` and `json.dump` use file objects
+* `json.loads` and `json.dumps` take/return strings (that's what the "s" stands for)

@@ -32,6 +32,10 @@ def submit_new():
 
     json_data = request.get_json(silent=False)
 
+    # NOTE: May want to remove conversion of sensor ID to int, allowing for
+    # sensor ID strings which are not strings which can be converted to integers.
+    # Would be able to remove ValueError handling if we did this.
+
     try:
         json_data['data'] = json.loads(json_data['data'])
         sensor_id = int(json_data['data']['id'])
@@ -40,7 +44,7 @@ def submit_new():
     except ValueError:
         return jsonify({"Success": False, "Error": "Invalid sensor ID"})
 
-    print(json.dumps(json_data, indent=2))
+    # print(json.dumps(json_data, indent=2))
 
     data_dir = current_app.config["DATA_DIR"]
     data_file = os.path.join(data_dir, "{}.txt".format(sensor_id))
@@ -52,8 +56,23 @@ def submit_new():
 
     return jsonify({"Success": True})
 
+@bp.route("/log-new")
 def json_transform():
-    pass
+
+    # Whether to return a json "list" or a "dict"
+    return_list = False
+    
+    data_dir = current_app.config["DATA_DIR"]
+    test_file = os.path.join(data_dir, os.listdir(data_dir)[0])
+
+    with open(test_file, "r") as f:
+        json_dumps = [json.loads(line) for line in f.readlines() if line.rstrip() != ""]
+
+    if return_list:
+        return jsonify(json_dumps)
+    else:
+        new_json = {snippet.pop('published_at'): snippet for snippet in json_dumps}
+        return jsonify(new_json)
 
 def gen_csv():
     pass
