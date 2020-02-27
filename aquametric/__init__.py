@@ -15,8 +15,10 @@ def create_app(test_config=None):
         os.makedirs(app.config["DATA_DIR"])
 
     from . import home
+    from . import logs
     from . import graphs
     app.register_blueprint(home.bp)
+    app.register_blueprint(logs.bp)
     app.register_blueprint(graphs.bp)
 
     return app

@@ -22,6 +22,11 @@ Stream stage monitoring.
 * [ ] Add cron job on server to back up data directory
     * Remove old test files once everything is migrated
 
+* [ ] Sensor path pages and graph/log URLs will be based on sensor ID string
+    * A json file will contain correlations between ID strings and prettyname/other metadata
+* [ ] Graphs should show back to 24 or 48 hours before latest data point or earliest data, whichever is later
+    * The URL args for these graphs are going to get epic
+
 ## Setup
 
 * Add config through environment variables (TODO: Describe)
