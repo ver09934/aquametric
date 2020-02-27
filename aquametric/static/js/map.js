@@ -15,10 +15,8 @@ $(document).ready(function(){
         attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mymap);
 
-    $.ajax({
-        url: "/sensors.json"
-    }).done(function(data) {
-        
+    $.ajax({url: "/sensors.json"}).done(function(data) {
+
         for (var id of Object.keys(data)) {
             sensorInfo = data[id]
             var location = L.latLng(sensorInfo["lat"], sensorInfo["lng"]);
@@ -27,14 +25,12 @@ $(document).ready(function(){
             marker.addTo(mymap);
         }
 
-        // e is the marker index
-        // val is the click data from leaflet
         function wrapper(sensorID) { 
-            return function(val) {
+            return function(clickData) {
                 
                 console.log("Sensor ID: " + sensorID);
                 console.log("Click data:");
-                console.log(val);
+                console.log(clickData);
 
                 document.getElementById("flash").style.display = "block";
                 $("#flash").fadeIn(350);
@@ -43,44 +39,11 @@ $(document).ready(function(){
                 document.getElementById("title").innerHTML = data[sensorID]["prettyname"];
                 document.getElementById("idnum").innerHTML = "#" + sensorID;
 
-                // TODO: Apply styles directly from CSS instead
-                document.getElementById('title').style.color = "black";
-                document.getElementById('idnum').style.color = "#666666";
+                $(".unfocused").removeClass('unfocused');
 
                 $("#flash").fadeOut(350);
-
-                // markerOnClick();
             };
         }
 
-        // TODO: Onclick/wrapper can now access the sensor json data and have key passed to them
-        // Now it's simply a matter of data[id]["img"], and setting the new styles via jquery
-        // Oh, and setting numbers, once the flask views are established to access these things
-        // I suppose we will have URLs for current numbers (perhaps url args for id and metric)
-        // Will need to figure our how this whole system is going to handle the datetimes...
-        // The datetime thing will require some thought...
-
-        /*
-        function markerOnClick() {
-            document.getElementById("flash").style.display = "block";
-            $("#flash").fadeIn(350);
-            $("#flash").fadeOut(350);
-        }
-        */
-
     });
-
-    /*
-    var locations = [
-        L.latLng(42.784723, -73.842862),
-        L.latLng(43.1, -74.1)
-    ];
-
-    for (var i = 0; i < locations.length; i++) {
-        var marker = L.marker(locations[i], {icon: stageMarker});
-        marker.on('click', wrapper(i));
-        marker.addTo(mymap);
-    }
-    */
-
 });

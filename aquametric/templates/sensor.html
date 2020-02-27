@@ -14,8 +14,8 @@
         <div id="main">
             <div id="flash"></div>
             <div id="info">
-                <div id="title">{{ sensor_id }}</div>
-                <div id="idnum">#000</div>
+                <div id="title">{{ sensor_name }}</div>
+                <div id="idnum">#{{ sensor_id }}</div>
                 <table id="datatable">
                     <tr>
                         <th><i class="fas fa-water"></i></th>
@@ -38,7 +38,7 @@
                         <th class="value">12%</th>
                     </tr>
                 </table>
-                <img id="photo" src="{{ url_for('static', filename='images/sensor-placeholder.jpg') }}">      
+                <img id="photo" src="{{ sensor_image }}">      
             </div>
             <div id="grapharea">
                 <div id="stagegraph" class="graph"></div>

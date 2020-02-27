@@ -1,5 +1,6 @@
-from flask import Blueprint, current_app, redirect, render_template, send_file, url_for
+from flask import abort, Blueprint, current_app, redirect, render_template, send_file, url_for
 import os
+from . import util
 
 bp = Blueprint('home', __name__)
 
@@ -10,22 +11,36 @@ bp = Blueprint('home', __name__)
 def index():
     return render_template('index.html')
 
-'''
-@bp.route('/sensor/')
-def sensor_redirect():
-    return redirect(url_for('sensor_default'))
-'''
-
 @bp.route('/sensor/')
 @bp.route('/sensor')
 def sensor_default():
-    return sensor("toaster")
-    # TODO: return redirect for url_for(sensor, sensor_id=first_id_in_units_file)
+    sensor_config = current_app.config["SENSOR_CONFIG"]
+    sensors = util.get_sensor_list(sensor_config)
+    if len(sensors) > 0:
+        return sensor(next(iter(sensors)))
+    else:
+        return abort(404, "No configured sensors exist.")
 
 @bp.route('/sensor/<sensor_id>')
 def sensor(sensor_id):
-    # TODO: Check if sensor ID is valid, if not, throw error
-    return render_template('sensor.html', sensor_id=sensor_id)
+    
+    sensor_config = current_app.config["SENSOR_CONFIG"]
+    data_dir = current_app.config["DATA_DIR"]
+    logfile = util.get_logfile_path(data_dir, sensor_id)
+
+    if sensor_id not in util.get_sensor_list(sensor_config):
+        abort(500, "Sensor ID is not in the sensor list.")
+    if not os.path.isfile(logfile):
+        abort(500, "No data exists for the sensor.")
+
+    sensor_info = util.get_sensor_info(sensor_id, sensor_config)
+
+    return render_template(
+        'sensor.html',
+        sensor_name=sensor_info["prettyname"],
+        sensor_id=sensor_id,
+        sensor_image=sensor_info["img"]
+    )
 
 @bp.route('/sensors.json')
 def sensorconfig():

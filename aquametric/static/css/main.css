@@ -1,3 +1,5 @@
+/* TODO: Make flash actually always cover the info box... */
+
 @font-face {
     font-family: 'BebasNeue-Regular';
     src: url('/static/fonts/39EBBB_0_0.eot');
@@ -8,6 +10,8 @@
 }
 
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+/* ---------- Main ---------- */
 
 body {
 	margin:0;
@@ -21,35 +25,30 @@ body {
 	background-color: #ffffff;
 }
 
-#items {
-    margin-top:10px;
-	float: right;
-}
-
 #logo {
 	float: left;
     padding-left: 15px;
     padding-top: 5px;
 }
 
-#photo {
-    margin-top:30px;
-    width: 100%;
-    border-radius: 10px;
+#items {
+    margin-top:10px;
+	float: right;
 }
 
-#info {
-    padding: 25px;
-	display: flex;
-	flex-direction: column;
-	background-color: #ededed;
-	flex-basis: 20%;
-	border-right-style: solid;
-	border-right-width: 12px;
-	border-right-color: white;
+#download {
+	font-family: "BebasNeue-Regular";
+	font-size: 25px;
+	padding-right: 30px;
 }
 
-/* TODO: Make flash actually always cover the info box... */
+#main {
+	display:flex;
+	width:100%;
+	height: calc(100vh - 59px);
+}
+
+/* ---------- Info Panel ---------- */
 
 #flash {
 	background-color: rgba(255, 255, 255, 1);
@@ -63,40 +62,45 @@ body {
 	z-index: 99;
 }
 
-#download {
-	font-family: "BebasNeue-Regular";
-	font-size: 25px;
-	padding-right: 30px;
+#info {
+    padding: 25px;
+	display: flex;
+	flex-direction: column;
+	background-color: #ededed;
+	flex-basis: 20%;
+	border-right-style: solid;
+	border-right-width: 12px;
+	border-right-color: white;
 }
 
-#datatable{
+#title {
+	display: inline-block;
+	font-family: "BebasNeue-Regular";
+	font-size: 45px;
+	color: black;
+}
+
+#idnum {
+	font-family: "Roboto";
+    font-weight: 500;
+	font-size: 15px;
+	color: #666666;
+}
+
+#datatable {
     background-color: white;
     padding:15px;
     margin-top:20px;
 	border-radius: 10px;
-	color: lightgray;
+	color: black;
 }
 
-#map {
-	-webkit-filter: constrast(110%); /* Safari 6.0 - 9.0 */
-  	filter: contrast(110%);
-	position: inherit; top:0; bottom:0; right:0; left:0;
-    width: calc(80% - 62px);
-    height: calc(100% - 15px);
+.fas {
+	color: #201d69;
 }
 
-#grapharea {
-	width: calc(80% - 94px);
-	overflow-y: scroll;
-	padding-right: 30px;
-}
-
-.graph {
-    height:200px;
-    width: 100%;
-    background-color: #ededed;
-    margin-bottom: 12px;
-    border-radius: 10px;
+.unfocused {
+	color: lightgray !important;
 }
 
 th {
@@ -110,22 +114,34 @@ th {
     text-align: right;
 }
 
-#title {
-	display: inline-block;
-	font-family: "BebasNeue-Regular";
-	font-size: 45px;
-	color: lightgray;
+#photo {
+    margin-top:30px;
+    width: 100%;
+    border-radius: 10px;
 }
 
-#idnum {
-	font-family: "Roboto";
-    font-weight: 500;
-	font-size: 15px;
-	color: lightgray;
+/* ---------- Map ---------- */
+
+#map {
+	-webkit-filter: constrast(110%); /* Safari 6.0 - 9.0 */
+  	filter: contrast(110%);
+	position: inherit; top:0; bottom:0; right:0; left:0;
+    width: calc(80% - 62px);
+    height: calc(100% - 15px);
 }
 
-#main {
-	display:flex;
-	width:100%;
-	height: calc(100vh - 59px);
+/* ---------- Graphs ---------- */
+
+#grapharea {
+	width: calc(80% - 94px);
+	overflow-y: scroll;
+	padding-right: 30px;
+}
+
+.graph {
+    height:200px;
+    width: 100%;
+    background-color: #ededed;
+    margin-bottom: 12px;
+    border-radius: 10px;
 }

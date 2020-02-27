@@ -64,14 +64,12 @@ def log_json(sensor_id, filetype):
 
     sensor_config = current_app.config["SENSOR_CONFIG"]
     data_dir = current_app.config["DATA_DIR"]
-
     logfile = util.get_logfile_path(data_dir, sensor_id)
 
     if sensor_id not in util.get_sensor_list(sensor_config):
         abort(500, "Sensor ID is not in the sensor list.")
-    
     if not os.path.isfile(logfile):
-        abort(500, "No data exists for the sensor.")    
+        abort(500, "No data exists for the sensor.")
     
     with open(logfile, "r") as f:
         json_dumps = [json.loads(line) for line in f.readlines() if line.rstrip() != ""]
