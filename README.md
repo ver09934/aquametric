@@ -29,8 +29,24 @@ Stream stage monitoring.
 
 ## Setup
 
-* Add config through environment variables (TODO: Describe)
-* Add unit list `JSON` file (TODO: Describe)
+* Add config through environment variables (TODO)
+* Add sensor list `JSON` file
+
+    The following is an example `/sensors.json`:
+    ```json
+    {
+        "001": {
+            "lat": 42.784723,
+            "lng": -73.842862,
+            "img": "/static/images/example-1.png"
+        },
+        "002": {
+            "lat": 43.100000,
+            "lng": -74.10000,
+            "img": "/static/images/example-2.png"
+        }
+    }
+    ```
 * Deploy a sensor unit (TODO: Get sensor code into version control)
 
 ## Running (Development)

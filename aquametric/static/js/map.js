@@ -15,6 +15,37 @@ $(document).ready(function(){
         attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mymap);
 
+    $.ajax({
+        url: "/sensors.json"
+    }).done(function(data) {
+        
+        for (var id of Object.keys(data)) {
+            sensorInfo = data[id]
+            var location = L.latLng(sensorInfo["lat"], sensorInfo["lng"]);
+            var marker = L.marker(location, {icon: stageMarker});
+            marker.on('click', wrapper(id));
+            marker.addTo(mymap);
+        }
+
+        // e is the marker index
+        // val is the click data from leaflet
+        function wrapper(e){ 
+            return function(val) {
+                console.log(val);
+                console.log(e);
+                markerOnClick();
+            };
+        }
+        
+        function markerOnClick() {
+            document.getElementById("flash").style.display = "block";
+            $("#flash").fadeIn(350);
+            $("#flash").fadeOut(350);
+        }
+
+    });
+
+    /*
     var locations = [
         L.latLng(42.784723, -73.842862),
         L.latLng(43.1, -74.1)
@@ -25,27 +56,6 @@ $(document).ready(function(){
         marker.on('click', wrapper(i));
         marker.addTo(mymap);
     }
-
-    // e is the marker index
-    // val is the click data from leaflet
-    function wrapper(e){ 
-        return function(val){
-            console.log(val);
-            console.log(e);
-            markerOnClick();
-        };
-    }
-
-    /*
-    for (var i = 0; i < locations.length; i++) {
-        var marker = L.marker(locations[i], {icon: stageMarker});.on('click', markerOnClick).addTo(mymap);
-    }
     */
-    
-    function markerOnClick() {
-        document.getElementById("flash").style.display = "block";
-        $("#flash").fadeIn(350);
-        $("#flash").fadeOut(350);
-    }
 
 });
