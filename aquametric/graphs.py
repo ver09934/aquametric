@@ -15,7 +15,7 @@ def test():
     ax.set_xlabel("X Label")
     ax.set_ylabel("Y Label")
 
-    ax.margins(x=0.01, y=0.15)
+    ax.margins(x=0.01, y=0.15) # Margins are percentages
     fig.tight_layout()
     
     img_io = BytesIO()
