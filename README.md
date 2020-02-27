@@ -26,6 +26,9 @@ Stream stage monitoring.
     * A json file will contain correlations between ID strings and prettyname/other metadata
 * [ ] Graphs should show back to 24 or 48 hours before latest data point or earliest data, whichever is later
     * The URL args for these graphs are going to get epic
+* Timezone parsing:
+    * `datetime.datetime.strptime("2020-02-27T07:21:21.932Z", '%Y-%m-%dT%H:%M:%S.%f%z')`
+    * `datetime.datetime.strptime("2020-02-27T07:21:21.932+05:30", '%Y-%m-%dT%H:%M:%S.%f%z')`
 
 ## Setup
 
