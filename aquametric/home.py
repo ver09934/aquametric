@@ -35,14 +35,16 @@ def submit_new():
     # NOTE: May want to remove conversion of sensor ID to int, allowing for
     # sensor ID strings which are not strings which can be converted to integers.
     # Would be able to remove ValueError handling if we did this.
+    # update: This has now been done!
 
     try:
         json_data['data'] = json.loads(json_data['data'])
-        sensor_id = int(json_data['data']['id'])
+        # sensor_id = int(json_data['data']['id'])
+        sensor_id = json_data['data']['id']
     except KeyError:
         return jsonify({"Success": False, "Error": "Missing fields"})
-    except ValueError:
-        return jsonify({"Success": False, "Error": "Invalid sensor ID"})
+    # except ValueError:
+    #    return jsonify({"Success": False, "Error": "Invalid sensor ID"})
 
     # print(json.dumps(json_data, indent=2))
 
