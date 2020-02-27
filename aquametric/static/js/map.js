@@ -36,7 +36,14 @@ $(document).ready(function(){
                 markerOnClick();
             };
         }
-        
+
+        // TODO: Onclick/wrapper can now access the sensor json data and have key passed to them
+        // Now it's simply a matter of data[id]["img"], and setting the new styles via jquery
+        // Oh, and setting numbers, once the flask views are established to access these things
+        // I suppose we will have URLs for current numbers (perhaps url args for id and metric)
+        // Will need to figure our how this whole system is going to handle the datetimes...
+        // The datetime thing will require some thought...
+
         function markerOnClick() {
             document.getElementById("flash").style.display = "block";
             $("#flash").fadeIn(350);
