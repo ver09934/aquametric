@@ -78,6 +78,9 @@ def log_json(sensor_id, filetype):
 
     if filetype == "json":
 
+        if "latest" in request.args:
+            return jsonify(json_dumps[-1])
+
         # Whether to return a json "list" or a "dict"
         return_list = False
 
@@ -114,24 +117,7 @@ def log_json(sensor_id, filetype):
 
     else:
         abort(500, "Invalid log filetype.")
-
-@bp.route("/data/<sensor_id>/current")
-def current_data(sensor_id):
-
-    sensor_config = current_app.config["SENSOR_CONFIG"]
-    data_dir = current_app.config["DATA_DIR"]
-
-    logfile = util.get_logfile_path(data_dir, sensor_id)
-
-    if sensor_id not in util.get_sensor_list(sensor_config):
-        abort(500, "Sensor ID is not in the sensor list.")
     
-    if not os.path.isfile(logfile):
-        abort(500, "No data exists for the sensor.")
-    
-    return logfile
-    # TODO: Return actual data instead of a file path
-
 @bp.route('/test')
 def test():
-    return log_json()
+    return log_json("001", "json")
