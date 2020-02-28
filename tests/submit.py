@@ -9,9 +9,11 @@ nowstr = now.strftime("%Y-%m-%dT%H:%M:%S.{:03d}Z").format(round(int(now.strftime
 
 # '2020-02-25T00:16:58.228Z'
 
-json_data = {'event': 'Measurement', 'data': '{"id":"001","battery":4.132500,"stage":100,"temp":4.080159,"conductivity":0.835678,"turbidity":0.201465}', 'published_at': nowstr, 'coreid': 'e00fce68bc77a626f8b797ea'}
+# json_data = {'event': 'Measurement', 'data': '{"id":"001","battery":4.132500,"stage":100,"temp":4.080159,"conductivity":0.835678,"turbidity":0.201465}', 'published_at': nowstr, 'coreid': 'e00fce68bc77a626f8b797ea'}
+json_data = "{'event': 'Measurement', 'data': '{\"id\":\"001\",\"battery\":3.887500,\"stage\":101,\"temp\":3.110135,\"conductivity\":0.935604,\"turbidity\":0.255458}', 'published_at': '2020-02-28T11:53:00.694Z', 'coreid': 'e00fce68bc77a626f8b797ea'}"
 
-res = requests.post('http://localhost:5000/submit-new', json=json_data)
+res = requests.post('http://localhost:5000/submit-new', data=json_data)
+# res = requests.post('http://localhost:5000/submit-new', json=json_data)
 # res = requests.post('http://localhost:5000/submit-new', json={'a': 'b'})
 # res = requests.post('http://localhost:5000/submit-new', json='{"a": "b"}')
 # res = requests.post('http://localhost:5000/submit-new', json="{'a': 'b'}")

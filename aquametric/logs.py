@@ -37,11 +37,22 @@ def submit_new():
     # I know using eval() is a massive security hole, and I will 
     # endeavour to fix is as soon as possible, which is to say never
 
+    print(data)
+
+    # NEW ALGORITHM:
+    # If ' in json_str:
+    #   Replace all ' with ", and original " with ' in json_str
+    # Run json_data = json.loads(json_str)
+    # Replace all ' in json_data["data"] with "\
+    # Run json_data["data"] = json.loads(json_data["data"])
+
     json_error_str = "Data could not be parsed into valid JSON."
 
     try:
         json_data = json.loads(data)
+        print("Parsed JSON string using json.loads()...")
     except:
+        print("Could not parse JSON string using json.loads()!")
         try:
             json_data = eval(data)
         except:
@@ -50,33 +61,15 @@ def submit_new():
     if not isinstance(json_data, dict):
         abort(400, json_error_str)
 
-    '''
-    if isinstance(json_data['data'], str):
-        json_data['data'] = json.loads(json_data['data'])
-    '''
-
     # Original entry point:
-    '''
-    # request.get_json() seems to behave a bit weirdly...
-    json_data = request.get_json()
-    '''
-    # print(type(json_data))
-    # print(json_data)
-
-    # NOTE: May want to remove conversion of sensor ID to int, allowing for
-    # sensor ID strings which are not strings which can be converted to integers.
-    # Would be able to remove ValueError handling if we did this.
-    # update: This has now been done!
+    # json_data = request.get_json()
 
     try:
-        json_data['data'] = json.loads(json_data['data'])
-        # sensor_id = int(json_data['data']['id'])
-        # If integer, "{:03d}.txt".format(int(sensor_id))
+        if isinstance(json_data['data'], str):
+            json_data['data'] = json.loads(json_data['data'])
         sensor_id = json_data['data']['id']
     except KeyError:
         abort(400, "Missing fields.")
-    # except ValueError:
-    #    return jsonify({"Success": False, "Error": "Sensor ID not an integer"})
 
     # print(json.dumps(json_data, indent=2))
 
@@ -84,7 +77,6 @@ def submit_new():
     data_file = util.get_logfile_path(data_dir, sensor_id)
 
     with open(data_file, "a") as f:
-        # f.write(json.dumps(json_data) + "\n")
         json.dump(json_data, f)
         f.write("\n")
 
