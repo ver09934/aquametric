@@ -26,20 +26,14 @@ def main():
 
         for line in f.readlines():
             if all([substr in line for substr in ["001", "Measurement"]]):
-                
                 json_str = "{" + "{".join(line.split("{")[1:])
-
-                # TODO: Further clean the diry JSON
-
-                '''
-                # json_data = json.loads(json_str)
+                json_data = eval(json_str)
                 if isinstance(json_data['data'], str):
                     json_data['data'] = json.loads(json_data['data'])
-                lines_to_write.append(json.dumps(json_data))
-                '''
-    
-    print(lines_to_write)
-    
+                lines_to_write.append(json.dumps(json_data).rstrip() + "\n")
+
+    if os.path.exists(out_path):
+        os.remove(out_path)
     with open(out_path, "w") as f:
         f.writelines(lines_to_write)
     
