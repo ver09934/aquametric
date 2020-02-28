@@ -10,7 +10,7 @@
     </head>
     <body>
         <div id="navbar">
-            <div id="logo"><img height="44" alt="logo" src="{{ url_for('static', filename='images/Aquametric-01.svg') }}"></div>
+            <div id="logo"><a href="{{ url_for('home.index') }}"><img height="44" alt="logo" src="{{ url_for('static', filename='images/Aquametric-01.svg') }}"></a></div>
             <!--
             <div id="items">
                 <div id="download">Download Data</div>
@@ -44,6 +44,7 @@
                         <th class="value">12%</th>
                     </tr>
                 </table>
+                <div id="sensorlink"><a class="unfocused">View Graphs</a></div>
                 <img id="photo" src="{{ url_for('static', filename='images/sensor-placeholder.jpg') }}">     
             </div>
             <div id="map"></div>

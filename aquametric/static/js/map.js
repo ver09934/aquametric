@@ -40,6 +40,7 @@ $(document).ready(function(){
                 document.getElementById("idnum").innerHTML = "#" + sensorID;
 
                 $(".unfocused").removeClass('unfocused');
+                $("#sensorlink a").attr("href", "/sensor/" + sensorID);
 
                 $("#flash").fadeOut(350);
             };

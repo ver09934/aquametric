@@ -63,6 +63,7 @@ body {
 }
 
 #info {
+	/* overflow-y: scroll; */
     padding: 25px;
 	display: flex;
 	flex-direction: column;
@@ -93,10 +94,11 @@ body {
     margin-top:20px;
 	border-radius: 10px;
 	color: black;
+	margin-bottom: 15px;
 }
 
 .fas {
-	color: #201d69;
+	color: #0E194F;
 }
 
 .unfocused {
@@ -114,8 +116,21 @@ th {
     text-align: right;
 }
 
+#sensorlink {
+	text-align: center;
+	padding: 0px;
+	margin: 0px;
+}
+
+#sensorlink a {
+	color: #0E194F;
+	text-decoration: none;
+	font-family: "BebasNeue-Regular";
+	font-size: 24px;
+}
+
 #photo {
-    margin-top:30px;
+    margin-top: 15px;
     width: 100%;
     border-radius: 10px;
 }
@@ -139,9 +154,9 @@ th {
 }
 
 .graph {
-    height:200px;
+    /* height: 200px; */
     width: 100%;
     background-color: #ededed;
     margin-bottom: 12px;
-    border-radius: 10px;
+	border-radius: 10px;
 }

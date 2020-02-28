@@ -6,7 +6,7 @@
     </head>
     <body>
         <div id="navbar">
-            <div id="logo"><img height="44" alt="logo" src="{{ url_for('static', filename='images/Aquametric-01.svg') }}"></div>
+            <div id="logo"><a href="{{ url_for('home.index') }}"><img height="44" alt="logo" src="{{ url_for('static', filename='images/Aquametric-01.svg') }}"></a></div>
             <div id="items">
                 <div id="download">Download Data</div>
             </div>
@@ -41,10 +41,16 @@
                 <img id="photo" src="{{ sensor_image }}">      
             </div>
             <div id="grapharea">
-                <div id="stagegraph" class="graph"></div>
+                <img class="graph" src="{{ url_for('graphs.test') }}"></img>
+                <img class="graph" src="{{ url_for('graphs.test') }}"></img>
+                <img class="graph" src="{{ url_for('graphs.test') }}"></img>
+                <img class="graph" src="{{ url_for('graphs.test') }}"></img>
+                <!--
+                <div id="stagegraph" class="graph"><img src="/graph/test.png"></img></div>
                 <div id="tempgraph" class="graph"></div>
                 <div id="condgraph" class="graph"></div>
                 <div id="turbgraph" class="graph"></div>
+                -->
             </div>
         </div>
     </body>

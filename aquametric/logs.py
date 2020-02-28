@@ -111,6 +111,7 @@ def log_json(sensor_id, filetype):
         csv_IO.seek(0)
         response = make_response(csv_IO.getvalue())
         response.headers['Content-Type'] = 'text/plain'
+        # response.headers['Content-Type'] = 'text/csv'
         return response
 
     else:
