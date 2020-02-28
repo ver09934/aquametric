@@ -30,48 +30,64 @@ def log():
 @bp.route('/submit-new', methods=['GET', 'POST'])
 def submit_new():
 
-    # https://flask.palletsprojects.com/en/1.1.x/api/
+    def swap_quotes(input_str):
 
-    data = request.get_data(as_text=True)
+        singleq_indices = [i for i, char in enumerate(input_str) if char == "'"]
+        doubleq_indices = [i for i, char in enumerate(input_str) if char == '"']
 
-    # I know using eval() is a massive security hole, and I will 
-    # endeavour to fix is as soon as possible, which is to say never
+        str_list = list(input_str)
 
-    print(data)
+        for i in singleq_indices:
+            str_list[i] = '"'
+        for i in doubleq_indices:
+            str_list[i] = "'"
+        
+        return "".join(str_list)
 
-    # NEW ALGORITHM:
-    # If ' in json_str:
-    #   Replace all ' with ", and original " with ' in json_str
-    # Run json_data = json.loads(json_str)
-    # Replace all ' in json_data["data"] with "\
-    # Run json_data["data"] = json.loads(json_data["data"])
+    def load_json(json_str):
+        try:
+            json_data = json.loads(json_str)
+            print("JSON parsed without quote swap!")
+        except:
+            if "'" in json_str:
+                if '"' in json_str:
+                    if json_str.index("'") < json_str.index('"'):
+                        json_str = swap_quotes(json_str)
+                else:
+                    json_str = swap_quotes(json_str)
+            json_data = json.loads(json_str)
+            print("JSON parsed using quote swap!")
+        return json_data
 
-    json_error_str = "Data could not be parsed into valid JSON."
+    json_str = request.get_data(as_text=True)
+
+    '''
+    # Using eval() was very bad, it's a good thing I now have a better solution...
 
     try:
-        json_data = json.loads(data)
+        json_data = json.loads(json_str)
         print("Parsed JSON string using json.loads()...")
     except:
         print("Could not parse JSON string using json.loads()!")
         try:
-            json_data = eval(data)
+            json_data = eval(json_str)
         except:
-            abort(400, json_error_str)
+            abort(400, "JSON could not be loaded.")
     
     if not isinstance(json_data, dict):
-        abort(400, json_error_str)
+        abort(400, "JSON could not be loaded.")
+    '''
+    
+    json_data = load_json(json_str)
 
-    # Original entry point:
-    # json_data = request.get_json()
-
-    try:
-        if isinstance(json_data['data'], str):
-            json_data['data'] = json.loads(json_data['data'])
+    if "data" in json_data:
+        if isinstance(json_data["data"], str):
+            json_data["data"] = load_json(json_data["data"])
         sensor_id = json_data['data']['id']
-    except KeyError:
-        abort(400, "Missing fields.")
+    else:
+        return abort(400, 'JSON must contain a "data" field.')
 
-    # print(json.dumps(json_data, indent=2))
+    print(json.dumps(json_data, indent=2))
 
     data_dir = current_app.config["DATA_DIR"]
     data_file = util.get_logfile_path(data_dir, sensor_id)
