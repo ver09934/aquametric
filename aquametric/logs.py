@@ -30,7 +30,38 @@ def log():
 @bp.route('/submit-new', methods=['GET', 'POST'])
 def submit_new():
 
-    json_data = request.get_json(silent=False)
+    # https://flask.palletsprojects.com/en/1.1.x/api/
+
+    data = request.get_data(as_text=True)
+
+    # I know using eval() is a massive security hole, and I will 
+    # endeavour to fix is as soon as possible, which is to say never
+
+    json_error_str = "Data could not be parsed into valid JSON."
+
+    try:
+        json_data = json.loads(data)
+    except:
+        try:
+            json_data = eval(data)
+        except:
+            abort(400, json_error_str)
+    
+    if not isinstance(json_data, dict):
+        abort(400, json_error_str)
+
+    '''
+    if isinstance(json_data['data'], str):
+        json_data['data'] = json.loads(json_data['data'])
+    '''
+
+    # Original entry point:
+    '''
+    # request.get_json() seems to behave a bit weirdly...
+    json_data = request.get_json()
+    '''
+    # print(type(json_data))
+    # print(json_data)
 
     # NOTE: May want to remove conversion of sensor ID to int, allowing for
     # sensor ID strings which are not strings which can be converted to integers.
@@ -43,7 +74,7 @@ def submit_new():
         # If integer, "{:03d}.txt".format(int(sensor_id))
         sensor_id = json_data['data']['id']
     except KeyError:
-        return jsonify({"Success": False, "Error": "Missing fields"})
+        abort(400, "Missing fields.")
     # except ValueError:
     #    return jsonify({"Success": False, "Error": "Sensor ID not an integer"})
 
