@@ -27,7 +27,7 @@ def log():
 
 # --------------------------- END OLD FUNCTIONS ---------------------------
 
-@bp.route('/submit-new', methods=['GET', 'POST'])
+@bp.route('/submit-new', methods=['POST'])
 def submit_new():
 
     def swap_quotes(input_str):
@@ -60,6 +60,9 @@ def submit_new():
         return json_data
 
     json_str = request.get_data(as_text=True)
+
+    if json_str == "":
+        return jsonify({"Success": False, "Error": "No data posted"})
 
     '''
     # Using eval() was very bad, it's a good thing I now have a better solution...
