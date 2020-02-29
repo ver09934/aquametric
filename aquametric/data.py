@@ -86,8 +86,9 @@ def log_json(sensor_id, filetype):
             csv_writer.writerow(["{} ({})".format(header, util.data_units[header][2]) if header in util.data_units else header for header in headers])
             for dump in json_dumps:
                 dump.update(dump.pop('data'))
-                values = [dump[header] for header in headers]
-                csv_writer.writerow(values)
+                if all([header in dump for header in headers]):
+                    values = [dump[header] for header in headers]
+                    csv_writer.writerow(values)
         
         csv_IO.seek(0)
         response = make_response(csv_IO.getvalue())
