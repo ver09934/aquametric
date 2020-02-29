@@ -42,6 +42,11 @@ body {
 	padding-right: 30px;
 }
 
+#download a {
+	text-decoration: none;
+	color: inherit;
+}
+
 #main {
 	display:flex;
 	width:100%;

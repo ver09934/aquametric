@@ -73,7 +73,7 @@ def log_json(sensor_id, filetype):
         return jsonify(util.get_json(logfile, latest=("latest" in request.args)))
     elif filetype == "csv":
         
-        json_dumps = util.get_json(listform=True)
+        json_dumps = util.get_json(logfile, listform=True)
         csv_IO = StringIO()
         csv_writer = csv.writer(csv_IO, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
@@ -88,8 +88,8 @@ def log_json(sensor_id, filetype):
         
         csv_IO.seek(0)
         response = make_response(csv_IO.getvalue())
-        response.headers['Content-Type'] = 'text/plain'
-        # response.headers['Content-Type'] = 'text/csv' # to force download (at least in chromium)
+        # response.headers['Content-Type'] = 'text/plain'
+        response.headers['Content-Type'] = 'text/csv' # to force download (at least in chromium)
         return response
 
     else:
@@ -137,7 +137,7 @@ def graph(sensor_id):
     ax.plot(dates, values, util.plot_formats[field])
     ax.set_title("{} vs. Time".format(util.data_units[field][0]))
     ax.set_xlabel("Time")
-    ax.set_ylabel("{} ({})".format(*util.data_units[field]))
+    ax.set_ylabel("{} ({})".format(*[val for i, val in enumerate(util.data_units[field]) if i != 1]))
     ax.grid()
 
     ax.margins(x=0.01, y=0.15) # Margins are percentages

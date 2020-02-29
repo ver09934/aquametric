@@ -1,5 +1,6 @@
-from flask import abort, Blueprint, current_app, redirect, render_template, send_file, url_for
+from flask import abort, Blueprint, current_app, jsonify, redirect, render_template, send_file, url_for
 import os
+
 from . import util
 
 bp = Blueprint('home', __name__)
@@ -32,6 +33,10 @@ def sensor(sensor_id):
 @bp.route('/sensors.json')
 def sensorconfig():
     return send_file(current_app.config["SENSOR_CONFIG"])
+
+@bp.route('/units.json')
+def data_units():
+    return jsonify(util.data_units)
 
 @bp.route('/favicon.ico')
 def favicon():

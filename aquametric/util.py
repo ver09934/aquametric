@@ -87,11 +87,11 @@ plot_formats = {
 }
 
 data_units = {
-    "battery": ("Battery Voltage", "V"),
-    "stage": ("Stage Height", "cm"),
-    "temp": ("Temperature", "degrees C"),
-    "turbidity": ("Turbidity", "Turbids"),
-    "conductivity": ("Conductivity", "Siemens/Meter")
+    "battery": ["Battery Voltage", "Volts", "V"],
+    "stage": ["Stage Height", "centimeters", "cm"],
+    "temp": ["Temperature", "degrees C", "°C"],
+    "turbidity": ["Turbidity", "Turbids", "T"],
+    "conductivity": ["Conductivity", "Siemens/Meter", "S/M"]
 }
 
 def convert_stage(base_height, current_stage):

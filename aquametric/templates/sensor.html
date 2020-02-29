@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Aquametric | {{ sensor_name }}</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
         <script src="https://kit.fontawesome.com/558068c264.js" crossorigin="anonymous"></script>
     </head>
@@ -8,7 +9,7 @@
         <div id="navbar">
             <div id="logo"><a href="{{ url_for('home.index') }}"><img height="44" alt="logo" src="{{ url_for('static', filename='images/Aquametric-01.svg') }}"></a></div>
             <div id="items">
-                <div id="download">Download Data</div>
+                <div id="download"><a href="{{ url_for('data.log_json', sensor_id=sensor_id, filetype='csv') }}">Download Data</a></div>
             </div>
         </div>
         <div id="main">
