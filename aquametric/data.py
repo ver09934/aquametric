@@ -127,15 +127,25 @@ def graph(sensor_id):
         if field not in valid_fields:
             return abort(500, "Invalid field.")
 
+    filter_dates = False
+    if "hours" in request.args:
+        filter_dates = True
+        hours_back = int(request.args["hours"])
+
+    test_dates = [util.get_local_datetime(date) for date in json_data.keys()]
+    test_dates.sort()
+    latest_date = test_dates[-1]
+
     dates = []
     values = []
 
     for date_str, all_info in json_data.items():
-        if field in all_info["data"]:
-            dates.append(util.get_local_datetime(date_str))
-            values.append(all_info["data"][field])
-        else:
-            print("Warning: data line did not contain {}!".format(field))
+        if not filter_dates or (latest_date - util.get_local_datetime(date_str)).total_seconds() / 3600 < hours_back:
+            if field in all_info["data"]:
+                dates.append(util.get_local_datetime(date_str))
+                values.append(all_info["data"][field])
+            else:
+                print("Warning: data line did not contain {}!".format(field))
 
     # The key to using matplotlib with flask: don't use pyplot!
     # https://matplotlib.org/3.1.1/faq/howto_faq.html

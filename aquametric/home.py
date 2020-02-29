@@ -1,4 +1,4 @@
-from flask import abort, Blueprint, current_app, jsonify, redirect, render_template, send_file, url_for
+from flask import abort, Blueprint, current_app, jsonify, redirect, render_template, request, send_file, url_for
 import os
 
 from . import util
@@ -23,12 +23,16 @@ def sensor(sensor_id):
 
     sensor_info = util.get_sensor_info(sensor_id, sensor_config)
 
+    passthrough_args = ["hours"]
+    img_args = {key: value for key, value in request.args.items() if key in passthrough_args}
+
     return render_template(
         'sensor.html',
         data_units=util.data_units,
         sensor_info=sensor_info,
         sensor_id=sensor_id,
-        current_data=util.get_json(logfile, latest=True)
+        current_data=util.get_json(logfile, latest=True),
+        img_args=img_args
     )
 
 @bp.route('/sensors.json')

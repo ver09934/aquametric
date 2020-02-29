@@ -39,7 +39,7 @@ $(document).ready(function(){
                 $("#idnum").html("#" + sensorID);
 
                 $(".unfocused").removeClass('unfocused');
-                $("#sensorlink a").attr("href", "/sensor/" + sensorID);
+                $("#sensorlink a").attr("href", "/sensor/" + sensorID + "?hours=168");
                 
                 $.ajax({url: "/data/" + sensorID + "/log.json?latest"}).done(function(logData) {
                     
