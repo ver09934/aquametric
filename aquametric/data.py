@@ -80,7 +80,7 @@ def log_json(sensor_id, filetype):
         if len(json_dumps) > 0:
             header_dump = json_dumps[0]
             headers = ['published_at'] + [field for field in header_dump['data'] if field != "id"]
-            csv_writer.writerow(headers)
+            csv_writer.writerow(["{} ({})".format(header, util.data_units[header][2]) if header in util.data_units else header for header in headers])
             for dump in json_dumps:
                 dump.update(dump.pop('data'))
                 values = [dump[header] for header in headers]
