@@ -26,9 +26,9 @@ def sensor(sensor_id):
     return render_template(
         'sensor.html',
         data_units=util.data_units,
-        sensor_name=sensor_info["prettyname"],
+        sensor_info=sensor_info,
         sensor_id=sensor_id,
-        sensor_image=sensor_info["img"]
+        current_data=util.get_json(logfile, latest=True)
     )
 
 @bp.route('/sensors.json')

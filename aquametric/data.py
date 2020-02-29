@@ -101,6 +101,8 @@ def log_json(sensor_id, filetype):
 @bp.route('/data/<sensor_id>/plot.png')
 def graph(sensor_id):
 
+    # TODO: Add date filtering options
+
     sensor_config = current_app.config["SENSOR_CONFIG"]
     data_dir = current_app.config["DATA_DIR"]
     logfile = util.get_logfile_path(data_dir, sensor_id)
