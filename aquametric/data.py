@@ -77,11 +77,9 @@ def log_json(sensor_id, filetype):
         csv_writer = csv.writer(csv_IO, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
         if len(json_dumps) > 0:
-
             header_dump = json_dumps[0]
             headers = ['published_at'] + [field for field in header_dump['data'] if field != "id"]
             csv_writer.writerow(headers)
-        
             for dump in json_dumps:
                 dump.update(dump.pop('data'))
                 values = [dump[header] for header in headers]
@@ -98,9 +96,6 @@ def log_json(sensor_id, filetype):
 
 @bp.route('/data/<sensor_id>/plot.png')
 def graph(sensor_id):
-    
-    import datetime
-    import pytz
 
     sensor_config = current_app.config["SENSOR_CONFIG"]
     data_dir = current_app.config["DATA_DIR"]
@@ -113,30 +108,29 @@ def graph(sensor_id):
 
     json_data = util.get_json(util.get_logfile_path(data_dir, sensor_id))
 
-    # TODO: Check if field is a valid data field
-    # TODO: Add units
-    # TODO: Add data download link
-    # TODO: Add about page
-    # TODO: templates in html (reduce code duplication)
-    # TODO: make sidebar flash actually good
-
-    # -------- Bad -------
     args = request.args
     field = args["field"]
+
+    print(field)
+
+    if len(json_data) > 0:
+        valid_fields = [field for field in json_data[next(iter(json_data))]["data"] if field != "id"]
+        if field not in valid_fields:
+            return abort(500, "Invalid field.")
+
     dates = []
     values = []
+
     for date_str, all_info in json_data.items():
-        dates.append(date_str)
+        dates.append(util.get_local_datetime(date_str))
         values.append(all_info["data"][field])
-    dates = [util.get_local_datetime(date) for date in dates]
-    # ------ End Bad -----
 
     fig, ax = plt.subplots(figsize=(13, 3))
     
-    ax.plot(dates, values, 'go-')
-    ax.set_title("Graph: {} vs. Time".format(field.title()))
+    ax.plot(dates, values, util.plot_formats[field])
+    ax.set_title("{} vs. Time".format(util.data_units[field][0]))
     ax.set_xlabel("Time")
-    ax.set_ylabel("{} (Units?)".format(field.title()))
+    ax.set_ylabel("{} ({})".format(*util.data_units[field]))
     ax.grid()
 
     ax.margins(x=0.01, y=0.15) # Margins are percentages
@@ -152,4 +146,12 @@ def graph(sensor_id):
 
     response = make_response(img_io.getvalue())
     response.headers['Content-Type'] = 'image/png'
+
+    '''
+    response.headers['Last-Modified'] = datetime.datetime.now()
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '-1'
+    '''
+
     return response

@@ -74,11 +74,20 @@ def get_local_datetime(date_str):
 
 # ---------------- Data Conversions ----------------
 
-units = {
-    "battery": ("Volts", "V"),
-    "stage": ("Centimeters", "cm"),
-    "turbidity": ("turbiditiness", ""),
-    "conductivity": ("Siemens/Meter", "S/M"),
+plot_formats = {
+    "battery": "go-",
+    "stage": "bo-",
+    "temp": "ro-",
+    "turbidity": "ko-",
+    "conductivity": "co-"
+}
+
+data_units = {
+    "battery": ("Battery Voltage", "V"),
+    "stage": ("Stage Height", "cm"),
+    "temp": ("Temperature", "degrees C"),
+    "turbidity": ("Turbidity", "Turbids"),
+    "conductivity": ("Conductivity", "Siemens/Meter")
 }
 
 def convert_stage(base_height, current_stage):

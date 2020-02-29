@@ -41,10 +41,11 @@
                 <img id="photo" src="{{ sensor_image }}">      
             </div>
             <div id="grapharea">
-                <img class="graph" src="{{ url_for('graphs.test') }}"></img>
-                <img class="graph" src="{{ url_for('graphs.test') }}"></img>
-                <img class="graph" src="{{ url_for('graphs.test') }}"></img>
-                <img class="graph" src="{{ url_for('graphs.test') }}"></img>
+                <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field="battery") }}"></img>
+                <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field="stage") }}"></img>
+                <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field="temp") }}"></img>
+                <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field="turbidity") }}"></img>
+                <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field="conductivity") }}"></img>
                 <!--
                 <div id="stagegraph" class="graph"><img src="/graph/test.png"></img></div>
                 <div id="tempgraph" class="graph"></div>

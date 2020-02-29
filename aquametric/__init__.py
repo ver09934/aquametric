@@ -20,3 +20,18 @@ def create_app(test_config=None):
     app.register_blueprint(data.bp)
 
     return app
+
+# TODO: Check if field is a valid data field
+# TODO: Add units
+# TODO: Add data download link
+# TODO: Add about page
+# TODO: templates in html (reduce code duplication)
+# TODO: make sidebar flash actually good
+# TODO: Clean up tests
+
+# TODO: Deal with fields and units
+# TODO: Add current info to side panel
+# TODO: Add time last reported to side panel
+
+# TODO: Add stage offset stuff to sensors.json
+# TODO: Add lots of URL args for graphs
