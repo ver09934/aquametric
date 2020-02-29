@@ -68,15 +68,25 @@ body {
 }
 
 #info {
-	/* overflow-y: scroll; */
-    padding: 25px;
+	overflow-y: scroll; /* Comment for no overflow scrolling */
+	padding: 25px;
+	padding-top: 15px;
 	display: flex;
 	flex-direction: column;
 	background-color: #ededed;
-	flex-basis: 20%;
+	flex-basis: 23%; /* Changed from 20 to fit data, but neccessitated scrolling */
 	border-right-style: solid;
 	border-right-width: 12px;
 	border-right-color: white;
+}
+
+/* Hide info panel scrollbars */
+#info::-webkit-scrollbar {
+	display: none;
+}
+#info {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 }
 
 #title {
@@ -121,6 +131,10 @@ th {
     text-align: right;
 }
 
+.number, .unit {
+	display: inline;
+}
+
 #sensorlink {
 	text-align: center;
 	padding: 0px;
@@ -137,7 +151,8 @@ th {
 #photo {
     margin-top: 15px;
     width: 100%;
-    border-radius: 10px;
+	border-radius: 10px;
+	margin-bottom: 15px; /* To add a bit more scroll distance at bottom of sidebar */
 }
 
 /* ---------- Map ---------- */

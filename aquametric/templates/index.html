@@ -24,25 +24,25 @@
                 <div id="title" class="unfocused">Select a sensor</div>
                 <div id="idnum" class="unfocused">#000</div>
                 <table id="datatable" class="unfocused">
-                    <tr>
+                    <tr id="stage">
                         <th><i class="fas fa-water unfocused"></i></th>
-                        <th>Stage Height</th>
-                        <th class="value">0 cm</th>
+                        <th>{{ data_units["stage"][0] }}</th>
+                        <th class="value"><div class="number">0</div> <div class="unit">{{ data_units["stage"][2] }}</div></th>
                     </tr>
-                    <tr>
+                    <tr id="temp" >
                         <th><i class="fas fa-thermometer-three-quarters unfocused"></i></th>
-                        <th>Temperature</th>
-                        <th class="value">0&deg;C</th>
+                        <th>{{ data_units["temp"][0] }}</th>
+                        <th class="value"><div class="number">0</div> <div class="unit">{{ data_units["temp"][2] }}</div></th>
                     </tr>
-                    <tr>
+                    <tr id="turbidity">
                         <th><i class="fas fa-wind unfocused"></i></th>
-                        <th>Turbidity</th>
-                        <th class="value">0%</th>
+                        <th>{{ data_units["turbidity"][0] }}</th>
+                        <th class="value"><div class="number">0</div> <div class="unit">{{ data_units["turbidity"][2] }}</div></th>
                     </tr>
-                    <tr>
+                    <tr id="conductivity">
                         <th><i class="fas fa-tachometer-alt unfocused"></i></th>
-                        <th>Conductivity</th>
-                        <th class="value">0%</th>
+                        <th>{{ data_units["conductivity"][0] }}</th>
+                        <th class="value"><div class="number">0</div> <div class="unit">{{ data_units["conductivity"][2] }}</div></th>
                     </tr>
                 </table>
                 <div id="sensorlink"><a class="unfocused">View Graphs</a></div>

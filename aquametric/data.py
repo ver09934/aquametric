@@ -68,6 +68,9 @@ def log_json(sensor_id, filetype):
         abort(500, "Sensor ID is not in the sensor list.")
     if not os.path.isfile(logfile):
         abort(500, "No data exists for the sensor.")
+    
+    if "raw" in request.args:
+        return send_file(logfile)
 
     if filetype == "json":
         return jsonify(util.get_json(logfile, latest=("latest" in request.args)))
@@ -125,8 +128,11 @@ def graph(sensor_id):
     values = []
 
     for date_str, all_info in json_data.items():
-        dates.append(util.get_local_datetime(date_str))
-        values.append(all_info["data"][field])
+        if field in all_info["data"]:
+            dates.append(util.get_local_datetime(date_str))
+            values.append(all_info["data"][field])
+        else:
+            print("Warning: data line did not contain {}!".format(field))
 
     # The key to using matplotlib with flask: don't use pyplot!
     # https://matplotlib.org/3.1.1/faq/howto_faq.html

@@ -7,7 +7,7 @@ bp = Blueprint('home', __name__)
 
 @bp.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', data_units=util.data_units)
 
 @bp.route('/sensor/<sensor_id>')
 def sensor(sensor_id):
@@ -25,6 +25,7 @@ def sensor(sensor_id):
 
     return render_template(
         'sensor.html',
+        data_units=util.data_units,
         sensor_name=sensor_info["prettyname"],
         sensor_id=sensor_id,
         sensor_image=sensor_info["img"]

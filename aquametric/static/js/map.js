@@ -40,7 +40,23 @@ $(document).ready(function(){
 
                 $(".unfocused").removeClass('unfocused');
                 $("#sensorlink a").attr("href", "/sensor/" + sensorID);
+                
+                $.ajax({url: "/data/" + sensorID + "/log.json?latest"}).done(function(logData) {
+                    
+                    console.log("Current data:");
+                    console.log(logData);
 
+                    fields = ["stage", "temp", "turbidity", "conductivity"];
+
+                    for (var field of Object.keys(logData["data"])) {
+                        if (fields.includes(field)) {
+                            console.log("Setting " + field + "...");
+                            $("#datatable #" + field + " .number").html(logData["data"][field].toFixed(1));
+                        }
+                    }
+
+                });
+                
                 $("#info").fadeIn(700);
             };
         }
