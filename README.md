@@ -78,3 +78,8 @@ I suspect that the problem was just the virtualhost configuration, but here are 
 * `json.load` and `json.dump` use file objects
 * `json.loads` and `json.dumps` take/return strings (that's what the "s" stands for)
 * `readlines()` does not `rstrip()`, and `writelines()` does not add newlines
+
+<!--
+$("#info").fadeTo(300, 0.5);
+$("#info").fadeTo(400, 1.0);
+-->

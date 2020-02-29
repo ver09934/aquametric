@@ -32,17 +32,16 @@ $(document).ready(function(){
                 console.log("Click data:");
                 console.log(clickData);
 
-                document.getElementById("flash").style.display = "block";
-                $("#flash").fadeIn(350);
+                $("#info").fadeOut(0);
 
-                document.getElementById('photo').src = data[sensorID]["img"];
-                document.getElementById("title").innerHTML = data[sensorID]["prettyname"];
-                document.getElementById("idnum").innerHTML = "#" + sensorID;
+                $("#photo").attr("src", data[sensorID]["img"]);
+                $("#title").html(data[sensorID]["prettyname"]);
+                $("#idnum").html("#" + sensorID);
 
                 $(".unfocused").removeClass('unfocused');
                 $("#sensorlink a").attr("href", "/sensor/" + sensorID);
 
-                $("#flash").fadeOut(350);
+                $("#info").fadeIn(700);
             };
         }
 
