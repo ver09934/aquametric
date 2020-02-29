@@ -4,22 +4,9 @@ from . import util
 
 bp = Blueprint('home', __name__)
 
-# TODO: Move sensor sidebar into a separate template which can then be included!
-# TODO: Restructure HTMl into templates as well...
-
 @bp.route('/')
 def index():
     return render_template('index.html')
-
-@bp.route('/sensor/')
-@bp.route('/sensor')
-def sensor_default():
-    sensor_config = current_app.config["SENSOR_CONFIG"]
-    sensors = util.get_sensor_list(sensor_config)
-    if len(sensors) > 0:
-        return sensor(next(iter(sensors)))
-    else:
-        return abort(404, "No configured sensors exist.")
 
 @bp.route('/sensor/<sensor_id>')
 def sensor(sensor_id):

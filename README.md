@@ -73,7 +73,8 @@ I suspect that the problem was just the virtualhost configuration, but here are 
     * See <https://modwsgi.readthedocs.io/en/develop/user-guides/application-issues.html#application-working-directory>
     * See <https://modwsgi.readthedocs.io/en/develop/user-guides/application-issues.html#access-rights-of-apache-user>
 
-## Python `JSON` Notes
+## Python Notes
 
 * `json.load` and `json.dump` use file objects
 * `json.loads` and `json.dumps` take/return strings (that's what the "s" stands for)
+* `readlines()` does not `rstrip()`, and `writelines()` does not add newlines

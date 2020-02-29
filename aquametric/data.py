@@ -1,12 +1,13 @@
 from flask import abort, Blueprint, current_app, jsonify, make_response, render_template, request, send_file
-from io import StringIO
+from io import StringIO, BytesIO
 import os
 import json
 import csv
+import matplotlib.pyplot as plt
 
 from . import util
 
-bp = Blueprint('logs', __name__)
+bp = Blueprint('data', __name__)
 
 # --------------- OLD FUNCTIONS FOR BACKWARDS-COMPATABILITY ---------------
 
@@ -30,62 +31,16 @@ def log():
 @bp.route('/submit-new', methods=['POST'])
 def submit_new():
 
-    def swap_quotes(input_str):
-
-        singleq_indices = [i for i, char in enumerate(input_str) if char == "'"]
-        doubleq_indices = [i for i, char in enumerate(input_str) if char == '"']
-
-        str_list = list(input_str)
-
-        for i in singleq_indices:
-            str_list[i] = '"'
-        for i in doubleq_indices:
-            str_list[i] = "'"
-        
-        return "".join(str_list)
-
-    def load_json(json_str):
-        try:
-            json_data = json.loads(json_str)
-            print("JSON parsed without quote swap!")
-        except:
-            if "'" in json_str:
-                if '"' in json_str:
-                    if json_str.index("'") < json_str.index('"'):
-                        json_str = swap_quotes(json_str)
-                else:
-                    json_str = swap_quotes(json_str)
-            json_data = json.loads(json_str)
-            print("JSON parsed using quote swap!")
-        return json_data
-
     json_str = request.get_data(as_text=True)
 
     if json_str == "":
         return jsonify({"Success": False, "Error": "No data posted"})
-
-    '''
-    # Using eval() was very bad, it's a good thing I now have a better solution...
-
-    try:
-        json_data = json.loads(json_str)
-        print("Parsed JSON string using json.loads()...")
-    except:
-        print("Could not parse JSON string using json.loads()!")
-        try:
-            json_data = eval(json_str)
-        except:
-            abort(400, "JSON could not be loaded.")
     
-    if not isinstance(json_data, dict):
-        abort(400, "JSON could not be loaded.")
-    '''
+    json_data = util.load_json(json_str)
     
-    json_data = load_json(json_str)
-
     if "data" in json_data:
         if isinstance(json_data["data"], str):
-            json_data["data"] = load_json(json_data["data"])
+            json_data["data"] = util.load_json(json_data["data"])
         sensor_id = json_data['data']['id']
     else:
         return abort(400, 'JSON must contain a "data" field.')
@@ -112,28 +67,12 @@ def log_json(sensor_id, filetype):
         abort(500, "Sensor ID is not in the sensor list.")
     if not os.path.isfile(logfile):
         abort(500, "No data exists for the sensor.")
-    
-    with open(logfile, "r") as f:
-        json_dumps = [json.loads(line) for line in f.readlines() if line.rstrip() != ""]
 
     if filetype == "json":
-
-        if "latest" in request.args:
-            return jsonify(json_dumps[-1])
-
-        # Whether to return a json "list" or a "dict"
-        return_list = False
-
-        if return_list:
-            return jsonify(json_dumps)
-        else:
-            new_json = {snippet.pop('published_at'): snippet for snippet in json_dumps}
-            return jsonify(new_json)
-    
+        return jsonify(util.get_json(logfile, latest=("latest" in request.args)))
     elif filetype == "csv":
-
-        # TODO: Should put something in the util file to reformat those awful dates
-
+        
+        json_dumps = util.get_json(listform=True)
         csv_IO = StringIO()
         csv_writer = csv.writer(csv_IO, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
@@ -141,24 +80,76 @@ def log_json(sensor_id, filetype):
 
             header_dump = json_dumps[0]
             headers = ['published_at'] + [field for field in header_dump['data'] if field != "id"]
-
             csv_writer.writerow(headers)
         
             for dump in json_dumps:
                 dump.update(dump.pop('data'))
                 values = [dump[header] for header in headers]
-
                 csv_writer.writerow(values)
         
         csv_IO.seek(0)
         response = make_response(csv_IO.getvalue())
         response.headers['Content-Type'] = 'text/plain'
-        # response.headers['Content-Type'] = 'text/csv'
+        # response.headers['Content-Type'] = 'text/csv' # to force download (at least in chromium)
         return response
 
     else:
         abort(500, "Invalid log filetype.")
+
+@bp.route('/data/<sensor_id>/plot.png')
+def graph(sensor_id):
     
-@bp.route('/test')
-def test():
-    return log_json("001", "json")
+    import datetime
+    import pytz
+
+    sensor_config = current_app.config["SENSOR_CONFIG"]
+    data_dir = current_app.config["DATA_DIR"]
+    logfile = util.get_logfile_path(data_dir, sensor_id)
+
+    if sensor_id not in util.get_sensor_list(sensor_config):
+        abort(500, "Sensor ID is not in the sensor list.")
+    if not os.path.isfile(logfile):
+        abort(500, "No data exists for the sensor.")
+
+    json_data = util.get_json(util.get_logfile_path(data_dir, sensor_id))
+
+    # TODO: Check if field is a valid data field
+    # TODO: Add units
+    # TODO: Add data download link
+    # TODO: Add about page
+    # TODO: templates in html (reduce code duplication)
+    # TODO: make sidebar flash actually good
+
+    # -------- Bad -------
+    args = request.args
+    field = args["field"]
+    dates = []
+    values = []
+    for date_str, all_info in json_data.items():
+        dates.append(date_str)
+        values.append(all_info["data"][field])
+    dates = [util.get_local_datetime(date) for date in dates]
+    # ------ End Bad -----
+
+    fig, ax = plt.subplots(figsize=(13, 3))
+    
+    ax.plot(dates, values, 'go-')
+    ax.set_title("Graph: {} vs. Time".format(field.title()))
+    ax.set_xlabel("Time")
+    ax.set_ylabel("{} (Units?)".format(field.title()))
+    ax.grid()
+
+    ax.margins(x=0.01, y=0.15) # Margins are percentages
+    fig.tight_layout()
+
+    bg_color = "#ededed"
+    fig.patch.set_facecolor(bg_color)
+    ax.patch.set_facecolor(bg_color)
+
+    img_io = BytesIO()
+    plt.savefig(img_io, format='png', facecolor=fig.get_facecolor())
+    img_io.seek(0)
+
+    response = make_response(img_io.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+    return response

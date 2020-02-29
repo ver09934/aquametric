@@ -2,8 +2,6 @@ import os
 import argparse
 import json
 
-# NOTE: readlines does not rstrip(), and writelines() does not add newlines
-
 def main():
 
     parser = argparse.ArgumentParser()
