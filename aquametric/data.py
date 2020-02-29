@@ -110,9 +110,11 @@ def graph(sensor_id):
     json_data = util.get_json(util.get_logfile_path(data_dir, sensor_id))
 
     args = request.args
-    field = args["field"]
-
-    print(field)
+    
+    if "field" in args:
+        field = args["field"]
+    else:
+        return abort(400, "Field not specified.")
 
     if len(json_data) > 0:
         valid_fields = [field for field in json_data[next(iter(json_data))]["data"] if field != "id"]
