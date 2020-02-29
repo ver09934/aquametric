@@ -72,6 +72,10 @@ def get_local_datetime(date_str):
     date = datetime.datetime.strptime(date_str, date_format)
     return date.astimezone(pytz.timezone(my_timezone))
 
+def get_fake_timestring():
+    now = datetime.datetime.now()
+    return now.strftime("%Y-%m-%dT%H:%M:%S.{:03d}Z").format(round(int(now.strftime("%f")) / 10**3))
+
 # ---------------- Data Conversions ----------------
 
 plot_formats = {
