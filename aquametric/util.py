@@ -55,6 +55,11 @@ def get_json(logfile, latest=False, listform=False):
 
     with open(logfile, "r") as f:
         json_dumps = [json.loads(line) for line in f.readlines() if line.rstrip() != ""]
+
+    for i, line in enumerate(json_dumps):
+        for field in line["data"].keys():
+            if field in data_filter_functions:
+                json_dumps[i]["data"][field] = data_filter_functions[field](line["data"][field])
     
     if latest:
         return json_dumps[-1]
@@ -101,5 +106,24 @@ data_units = {
     "conductivity": ["Conductivity", "Siemens/Meter", "S/M"]
 }
 
-def convert_stage(base_height, current_stage):
-    pass
+def stage_filter(val):
+    return val
+
+def turbidity_filter(val):
+    return val
+
+def conductivity_filter(val):
+    return val
+
+data_filter_functions = {
+    "stage": stage_filter,
+    "turbidity": turbidity_filter,
+    "conductivity": conductivity_filter
+}
+
+def stage_drop(val):
+    return val > 1_000
+
+data_drop_functions = {
+    "stage": stage_drop
+}

@@ -144,8 +144,11 @@ def graph(sensor_id):
     for date_str, all_info in json_data.items():
         if not filter_dates or (latest_date - util.get_local_datetime(date_str)).total_seconds() / 3600 < hours_back:
             if field in all_info["data"]:
-                dates.append(util.get_local_datetime(date_str))
-                values.append(all_info["data"][field])
+                cond_1 = field not in util.data_drop_functions
+                cond_2 = field in util.data_drop_functions and not util.data_drop_functions[field](all_info["data"][field])
+                if cond_1 or cond_2:
+                    dates.append(util.get_local_datetime(date_str))
+                    values.append(all_info["data"][field])
             else:
                 print("Warning: data line did not contain {}!".format(field))
 
