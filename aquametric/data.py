@@ -3,7 +3,8 @@ from io import StringIO, BytesIO
 import os
 import json
 import csv
-import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+import datetime
 
 from . import util
 
@@ -125,7 +126,11 @@ def graph(sensor_id):
         dates.append(util.get_local_datetime(date_str))
         values.append(all_info["data"][field])
 
-    fig, ax = plt.subplots(figsize=(13, 3))
+    # The key to using matplotlib with flask: don't use pyplot!
+    # https://matplotlib.org/3.1.1/faq/howto_faq.html
+
+    fig = Figure(figsize=(13, 3))
+    ax = fig.subplots()
     
     ax.plot(dates, values, util.plot_formats[field])
     ax.set_title("{} vs. Time".format(util.data_units[field][0]))
@@ -141,17 +146,16 @@ def graph(sensor_id):
     ax.patch.set_facecolor(bg_color)
 
     img_io = BytesIO()
-    plt.savefig(img_io, format='png', facecolor=fig.get_facecolor())
+    fig.savefig(img_io, format='png', facecolor=fig.get_facecolor())
     img_io.seek(0)
 
     response = make_response(img_io.getvalue())
     response.headers['Content-Type'] = 'image/png'
 
-    '''
+    # Disable caching
     response.headers['Last-Modified'] = datetime.datetime.now()
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = '-1'
-    '''
 
     return response
