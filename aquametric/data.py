@@ -3,7 +3,6 @@ from io import StringIO, BytesIO
 import os
 import json
 import csv
-import matplotlib.pyplot as plt
 
 from . import util
 
@@ -125,24 +124,7 @@ def graph(sensor_id):
         dates.append(util.get_local_datetime(date_str))
         values.append(all_info["data"][field])
 
-    fig, ax = plt.subplots(figsize=(13, 3))
-    
-    ax.plot(dates, values, util.plot_formats[field])
-    ax.set_title("{} vs. Time".format(util.data_units[field][0]))
-    ax.set_xlabel("Time")
-    ax.set_ylabel("{} ({})".format(*util.data_units[field]))
-    ax.grid()
-
-    ax.margins(x=0.01, y=0.15) # Margins are percentages
-    fig.tight_layout()
-
-    bg_color = "#ededed"
-    fig.patch.set_facecolor(bg_color)
-    ax.patch.set_facecolor(bg_color)
-
-    img_io = BytesIO()
-    plt.savefig(img_io, format='png', facecolor=fig.get_facecolor())
-    img_io.seek(0)
+    img_io = util.plot(dates, values, field)
 
     response = make_response(img_io.getvalue())
     response.headers['Content-Type'] = 'image/png'

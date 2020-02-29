@@ -92,3 +92,40 @@ data_units = {
 
 def convert_stage(base_height, current_stage):
     pass
+
+def plot(dates, values, field):
+
+    import time
+    while os.path.isfile("/tmp/mplock"):
+        time.sleep(1)
+
+    with open("/tmp/mplock", "w") as f:
+        f.write("")
+
+    import matplotlib.pyplot as plt
+    from io import BytesIO
+
+    fig, ax = plt.subplots(figsize=(13, 3))
+    
+    ax.plot(dates, values, plot_formats[field])
+    ax.set_title("{} vs. Time".format(data_units[field][0]))
+    ax.set_xlabel("Time")
+    ax.set_ylabel("{} ({})".format(*data_units[field]))
+    ax.grid()
+
+    ax.margins(x=0.01, y=0.15) # Margins are percentages
+    fig.tight_layout()
+
+    bg_color = "#ededed"
+    fig.patch.set_facecolor(bg_color)
+    ax.patch.set_facecolor(bg_color)
+
+    img_io = BytesIO()
+    plt.savefig(img_io, format='png', facecolor=fig.get_facecolor())
+    img_io.seek(0)
+
+    plt.close()
+
+    os.remove("/tmp/mplock")
+
+    return img_io
