@@ -12,6 +12,7 @@ bp = Blueprint('data', __name__)
 
 # --------------- OLD FUNCTIONS FOR BACKWARDS-COMPATABILITY ---------------
 
+'''
 @bp.route('/submit', methods=['GET', 'POST'])
 def submit():
     content = request.get_json(silent=False)
@@ -26,10 +27,11 @@ def log():
         return send_file(os.path.join(os.path.dirname(__file__), "test.txt"))
     except FileNotFoundError:
         return ("Logfile does not exist.")
+'''
 
 # --------------------------- END OLD FUNCTIONS ---------------------------
 
-@bp.route('/submit-new', methods=['POST'])
+@bp.route('/submit', methods=['POST'])
 def submit_new():
 
     json_str = request.get_data(as_text=True)
