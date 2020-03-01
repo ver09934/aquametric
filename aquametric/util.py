@@ -69,7 +69,9 @@ date_format = '%Y-%m-%dT%H:%M:%S.%f%z'
 my_timezone = 'US/Eastern'
 
 def get_local_datetime(date_str):
-    date = datetime.datetime.strptime(date_str, date_format)
+    # date = datetime.datetime.strptime(date_str, date_format)
+    date = datetime.datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ')
+    date = date.replace(tzinfo=pytz.UTC)
     return date.astimezone(pytz.timezone(my_timezone))
 
 def get_fake_timestring():
