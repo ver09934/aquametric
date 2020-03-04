@@ -148,9 +148,16 @@ th {
 	font-size: 24px;
 }
 
+/* It's jank, but it does work... */
+#photo-container {
+	display: inline-table;
+}
+
 #photo {
-    margin-top: 15px;
-    width: 100%;
+	margin-top: 15px;
+	display: block;
+	width: 100%;
+	height: auto;
 	border-radius: 10px;
 	margin-bottom: 15px; /* To add a bit more scroll distance at bottom of sidebar */
 }

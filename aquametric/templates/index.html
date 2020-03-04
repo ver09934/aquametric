@@ -46,7 +46,9 @@
                     </tr>
                 </table>
                 <div id="sensorlink"><a class="unfocused">View Graphs</a></div>
-                <img id="photo" src="{{ url_for('static', filename='images/sensor-placeholder.jpg') }}">     
+                <div id="photo-container">
+                    <img id="photo" src="{{ url_for('static', filename='images/sensor-placeholder.jpg') }}">
+                </div>
             </div>
             <div id="map"></div>
         </div>

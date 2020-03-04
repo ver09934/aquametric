@@ -39,7 +39,9 @@
                         <th class="value"><div class="number">{{ "{:.1f}".format(current_data["data"]["conductivity"]) }}</div> <div class="unit">{{ data_units["conductivity"][2] }}</div></th>
                     </tr>
                 </table>
-                <img id="photo" src="{{ sensor_info['img'] }}">      
+                <div id="photo-container">
+                    <img id="photo" src="{{ sensor_info['img'] }}">
+                </div>
             </div>
             <div id="grapharea">
                 <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field='stage', **img_args) }}"></img>
