@@ -7,7 +7,7 @@ $(document).ready(function(){
         popupAnchor:  [16, -50]   // point from which the popup should open relative to the iconAnchor
     });
 
-    var mymap = L.map('map').setView([42.784723, -73.842862], 8);
+    var mymap = L.map('map').setView([42.784723, -73.842862], 9);
     var group = L.layerGroup()
 
     var Hydda_Full = L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', {
