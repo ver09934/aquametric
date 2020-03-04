@@ -66,17 +66,22 @@ def get_json(logfile, latest=False, listform=False):
 # -------------- Datetime Conversions --------------
 
 date_format = '%Y-%m-%dT%H:%M:%S.%f%z'
+janky_date_format =  '%Y-%m-%dT%H:%M:%S.%fZ'
 my_timezone = 'US/Eastern'
+pretty_date_format = '%b %-d, %-H:%M'
 
 def get_local_datetime(date_str):
     # date = datetime.datetime.strptime(date_str, date_format)
     # Some versions of the datetime library had issue with the above line, so we switched to the line below
-    date = datetime.datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ').replace(tzinfo=pytz.UTC)
+    date = datetime.datetime.strptime(date_str, janky_date_format).replace(tzinfo=pytz.UTC)
     return date.astimezone(pytz.timezone(my_timezone))
 
 def get_fake_timestring():
     now = datetime.datetime.now()
     return now.strftime("%Y-%m-%dT%H:%M:%S.{:03d}Z").format(round(int(now.strftime("%f")) / 10**3))
+
+def get_pretty_datestring(datetime_obj):
+    return datetime_obj.strftime(pretty_date_format)
 
 # ---------------- Data Conversions ----------------
 
