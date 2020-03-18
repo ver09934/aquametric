@@ -2,6 +2,10 @@
 
 Stream stage monitoring.
 
+## Sensor Code
+
+The code running on the sensor units can be found in `/embedded`. Everything else is for running the website.
+
 ## TODO
 
 * [x] Get submission to separate unit files working
