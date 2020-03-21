@@ -5,7 +5,7 @@ Stream stage monitoring.
 ## Sensor Code
 
 The code running on the sensor units can be found in `/embedded`. Everything else is for running the website.
-
+<!--
 ## TODO
 
 * [x] Get submission to separate unit files working
@@ -33,7 +33,7 @@ The code running on the sensor units can be found in `/embedded`. Everything els
 * Timezone parsing:
     * `datetime.datetime.strptime("2020-02-27T07:21:21.932Z", '%Y-%m-%dT%H:%M:%S.%f%z')`
     * `datetime.datetime.strptime("2020-02-27T07:21:21.932+05:30", '%Y-%m-%dT%H:%M:%S.%f%z')`
-
+-->
 ## Setup
 
 * Add config through environment variables (TODO)
