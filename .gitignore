@@ -11,3 +11,7 @@ venv/
 test.txt
 data/
 sensors.json
+
+# jupyter files
+.ipynb_checkpoints/
+
