@@ -28,11 +28,13 @@
                         <th>{{ data_units["temp"][0] }}</th>
                         <th class="value"><div class="number">{{ "{:.1f}".format(current_data["data"]["temp"]) }}</div> <div class="unit">{{ data_units["temp"][2] }}</div></th>
                     </tr>
+                    {#
                     <tr id="turbidity">
                         <th><i class="fas fa-wind"></i></th>
                         <th>{{ data_units["turbidity"][0] }}</th>
                         <th class="value"><div class="number">{{ "{:.1f}".format(current_data["data"]["turbidity"]) }}</div> <div class="unit">{{ data_units["turbidity"][2] }}</div></th>
                     </tr>
+                    #}
                     <tr id="conductivity">
                         <th><i class="fas fa-tachometer-alt"></i></th>
                         <th>{{ data_units["conductivity"][0] }}</th>
@@ -46,7 +48,7 @@
             <div id="grapharea">
                 <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field='stage', **img_args) }}"></img>
                 <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field='temp', **img_args) }}"></img>
-                <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field='turbidity', **img_args) }}"></img>
+                <!-- <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field='turbidity', **img_args) }}"></img> -->
                 <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field='conductivity', **img_args) }}"></img>
                 <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field='battery', **img_args) }}"></img>
                 <!--
