@@ -39,6 +39,10 @@ def sensor(sensor_id):
 def sensorconfig():
     return send_file(current_app.config["SENSOR_CONFIG"])
 
+@bp.route('/liveconf.json')
+def liveconfig():
+    return send_file(current_app.config["LIVE_CONFIG"])
+
 @bp.route('/units.json')
 def data_units():
     return jsonify(util.data_units)
