@@ -46,7 +46,8 @@ $(document).ready(function(){
                     console.log("Current data:");
                     console.log(logData);
 
-                    fields = ["stage", "temp", "turbidity", "conductivity"];
+                    // fields = ["stage", "temp", "turbidity", "conductivity"];
+                    fields = ["stage", "temp", "conductivity"];
 
                     for (var field of Object.keys(logData["data"])) {
                         if (fields.includes(field)) {
