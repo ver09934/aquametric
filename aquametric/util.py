@@ -56,6 +56,11 @@ def get_json(logfile, latest=False, listform=False):
     with open(logfile, "r") as f:
         json_dumps = [json.loads(line) for line in f.readlines() if line.rstrip() != ""]
     
+    # This is just a quick hack, I should make a better system latter
+    # Hardcoded values, ugh
+    for item in json_dumps:
+        item["data"]["stage"] = 810 - item["data"]["stage"]
+
     if latest:
         return json_dumps[-1]
     if listform:
