@@ -43,6 +43,14 @@ def sensorconfig():
 def liveconfig():
     return send_file(current_app.config["LIVE_CONFIG"])
 
+@bp.route('/test', methods=['POST'])
+def test():
+    import json
+    with open(current_app.config["LIVE_CONFIG"], "r") as f:
+        live_config = json.load(f)
+        req_data = request.get_data(as_text=True)
+        return live_config.get(req_data, {"Error": "Sensor ID not found"})
+
 @bp.route('/units.json')
 def data_units():
     return jsonify(util.data_units)
