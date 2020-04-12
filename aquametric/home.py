@@ -1,5 +1,6 @@
 from flask import abort, Blueprint, current_app, jsonify, redirect, render_template, request, send_file, url_for
 import os
+import json
 
 from . import util
 
@@ -45,11 +46,44 @@ def liveconfig():
 
 @bp.route('/test', methods=['POST'])
 def test():
-    import json
     with open(current_app.config["LIVE_CONFIG"], "r") as f:
         live_config = json.load(f)
         req_data = request.get_data(as_text=True)
         return live_config.get(req_data, {"Error": "Sensor ID not found"})
+
+@bp.route('/liveconf-edit', methods=['GET', 'POST'])
+def liveconf_edit():
+    
+    if request.method == 'POST':
+        with open(current_app.config["LIVE_CONFIG"], "r") as f:
+            live_config = json.load(f)
+        
+        print(request.form)
+
+        update_conf = {
+            request.form['sensor_id']: {
+                'update_freq': int(request.form['update_freq']),
+                'ota_update': 'ota_update' in request.form
+            }
+        }
+
+        live_config.update(update_conf)
+
+        with open(current_app.config["LIVE_CONFIG"], "w") as f:
+            # json.dump(live_config, f)
+            f.write(json.dumps(live_config, indent=4))
+        
+        with open(current_app.config["LIVE_CONFIG"], "r") as f:
+            new_config = json.load(f)
+        
+        # return 'Config Updated! Check <a href="{url}">{url}</a> to confirm!'.format(url=url_for('home.liveconfig'))
+        return 'Config updated to:<pre>{}</pre><a href="{}">Edit Again</a>'.format(json.dumps(new_config, indent=4), url_for('home.liveconf_edit'))
+    
+    else:
+        with open(current_app.config["LIVE_CONFIG"], "r") as f:
+            live_config = json.load(f)
+            default_key = list(live_config.keys())[0]
+            return render_template('liveconf-edit.html', current_conf=live_config, default_key=default_key)
 
 @bp.route('/units.json')
 def data_units():
