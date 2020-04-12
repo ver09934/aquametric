@@ -25,7 +25,7 @@
                 $.ajax({url: "/liveconf.json", cache: false}).done(function(data) {
                     $('select[name="sensor_id"]').change(function() {
                         mydata = data[$(this).val()];
-                        console.log(mydata)
+                        console.log(mydata);
                         $('input[name="update_freq"]').val(mydata["update_freq"]);
                         $('input[name="ota_update"]').prop('checked', mydata["ota_update"]);
                     });
