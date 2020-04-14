@@ -85,6 +85,47 @@ def liveconf_edit():
             default_key = list(live_config.keys())[0]
             return render_template('liveconf-edit.html', current_conf=live_config, default_key=default_key)
 
+@bp.route('/liveconf-ota', methods=['POST'])
+def liveconf_otatoggle():
+
+    with open(current_app.config["LIVE_CONFIG"], "r") as f:
+        live_config = json.load(f)
+    
+    req_data = request.get_data(as_text=True)
+    success = True
+
+    def setall(ota_status):
+        for sensor_id in live_config.keys():
+            live_config[sensor_id]["ota_update"] = ota_status
+    
+    try:
+        req_data = req_data.replace("True", "true").replace("False", "false")
+        json_data = json.loads(req_data)
+        print("Using JSON...")
+        if type(json_data) == bool:
+            setall(json_data)
+        else:
+            for i, (sensor_id, ota_status) in enumerate(json_data.items()):
+                print(sensor_id)
+                print(ota_status)
+                if sensor_id in live_config and type(ota_status) == bool:
+                    live_config[sensor_id]["ota_update"] = ota_status
+                else:
+                    success = False
+    except json.decoder.JSONDecodeError:
+        print("Using text...")
+        req_data = req_data.lower().rstrip()
+        if req_data == "true" or req_data == "false":
+            ota_status = True if req_data == "true" else False
+            setall(ota_status)
+        else:
+            success = False
+        
+    with open(current_app.config["LIVE_CONFIG"], "w") as f:
+        f.write(json.dumps(live_config, indent=4))
+
+    return jsonify({"Success": success})
+
 @bp.route('/units.json')
 def data_units():
     return jsonify(util.data_units)
