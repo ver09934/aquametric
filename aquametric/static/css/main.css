@@ -165,8 +165,7 @@ th {
 /* ---------- Map ---------- */
 
 #map {
-	-webkit-filter: constrast(110%); /* Safari 6.0 - 9.0 */
-  	filter: contrast(110%);
+	filter: saturate(250%);
 	position: inherit; top:0; bottom:0; right:0; left:0;
     width: calc(80% - 62px);
     height: calc(100% - 15px);
