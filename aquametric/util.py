@@ -59,7 +59,7 @@ def get_json(logfile, latest=False, listform=False):
     # This is just a quick hack, I should make a better system latter
     # Hardcoded values, ugh
     for item in json_dumps:
-        item["data"]["stage"] = 990 - item["data"]["stage"] # 810
+        item["data"]["stage"] = 1143.0 - item["data"]["stage"] # 810, 990
 
     if latest:
         return json_dumps[-1]
