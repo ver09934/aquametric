@@ -100,7 +100,7 @@ plot_formats = {
 
 data_units = {
     "battery": ["Battery Voltage", "Volts", "V"],
-    "stage": ["Stage Height", "centimeters", "cm"],
+    "stage": ["Stage Height", "millimeters", "mm"],
     "temp": ["Temperature", "degrees C", "°C"],
     "turbidity": ["Turbidity", "Turbids", "T"],
     "conductivity": ["Conductivity", "Siemens/Meter", "S/M"]
