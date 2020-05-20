@@ -66,9 +66,12 @@ def get_json(logfile, latest=False, listform=False):
         A = l**2
         x = item["data"]["conductivity"]
 
-        R1 = R2 * x / (1 - x)
-        
-        item["data"]["conductivity"] = 10**6 * l / (R1 * A)
+        try:
+            R1 = R2 * x / (1 - x)
+            item["data"]["conductivity"] = 10**6 * l / (R1 * A)
+        except ZeroDivisionError as e:
+            # print(e)
+            item["data"]["conductivity"] = 0
 
     if latest:
         return json_dumps[-1]
