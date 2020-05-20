@@ -61,6 +61,15 @@ def get_json(logfile, latest=False, listform=False):
     for item in json_dumps:
         item["data"]["stage"] = 870 - item["data"]["stage"] # 810, 990, 1143
 
+        R2 = 470
+        l = 1.6
+        A = l**2
+        x = item["data"]["conductivity"]
+
+        R1 = R2 * x / (1 - x)
+        
+        item["data"]["conductivity"] = 10**6 * l / (R1 * A)
+
     if latest:
         return json_dumps[-1]
     if listform:
@@ -103,8 +112,9 @@ data_units = {
     "stage": ["Stage Height", "millimeters", "mm"],
     "temp": ["Temperature", "degrees C", "°C"],
     "turbidity": ["Turbidity", "Turbids", "T"],
-    "conductivity": ["Conductivity", "Siemens/Meter", "S/M"]
+    "conductivity": ["Conductivity", "microsiemens/centimeter", "µS/cm"]
 }
 
 def convert_stage(base_height, current_stage):
     pass
+
