@@ -15,7 +15,6 @@ $(document).ready(function(){
         attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mymap);
     */
-
     var CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 	subdomains: 'abcd',
@@ -40,13 +39,16 @@ $(document).ready(function(){
                 console.log(clickData);
 
                 $("#info").fadeOut(0);
-
                 $("#photo").attr("src", data[sensorID]["img"]);
                 $("#title").html(data[sensorID]["prettyname"]);
                 $("#idnum").html("#" + sensorID);
 
                 $(".unfocused").removeClass('unfocused');
                 $("#sensorlink a").attr("href", "/sensor/" + sensorID + "?hours=168");
+                
+                $("#stage-graph").attr("src", "/data/"+sensorID+"/plot.png?field=stage&hours=168");
+                $("#temp-graph").attr("src", "/data/"+sensorID+"/plot.png?field=temp&hours=168");
+                $("#cond-graph").attr("src", "/data/"+sensorID+"/plot.png?field=conductivity&hours=168");
                 
                 $.ajax({url: "/data/" + sensorID + "/log.json?latest"}).done(function(logData) {
                     

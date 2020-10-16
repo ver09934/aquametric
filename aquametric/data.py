@@ -155,16 +155,22 @@ def graph(sensor_id):
     fig = Figure(figsize=(13, 3))
     ax = fig.subplots()
     
-    ax.plot(dates, values, util.plot_formats[field])
-    ax.set_title("{} vs. Time".format(util.data_units[field][0]))
-    ax.set_xlabel("Time")
-    ax.set_ylabel("{} ({})".format(*[val for i, val in enumerate(util.data_units[field]) if i != 1]))
+    ax.plot(dates, values, util.plot_formats[field], markersize=3)
+    ax.set_title("{} vs. Time".format(util.data_units[field][0]), fontname="Roboto", fontweight="light")
+    #ax.set_xlabel("Time", fontname="Roboto")
+    ax.set_ylabel("{} ({})".format(*[val for i, val in enumerate(util.data_units[field]) if i != 1]), fontname="Roboto", fontweight="light")
+    for tick in ax.get_xticklabels():
+    	tick.set_fontname("Roboto")
+    	tick.set_fontweight("light")
+    for tick in ax.get_yticklabels():
+    	tick.set_fontname("Roboto")
+    	tick.set_fontweight("light")
     ax.grid()
 
     ax.margins(x=0.01, y=0.15) # Margins are percentages
     fig.tight_layout()
 
-    bg_color = "#ededed"
+    bg_color = "#ededed00"
     fig.patch.set_facecolor(bg_color)
     ax.patch.set_facecolor(bg_color)
 

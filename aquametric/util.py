@@ -61,7 +61,7 @@ def get_json(logfile, latest=False, listform=False):
     for item in json_dumps:
         item["data"]["stage"] = 870 - item["data"]["stage"] # 810, 990, 1143
 
-        R2 = 470
+        R2 = 4700
         l = 1.6
         A = l**2
         x = item["data"]["conductivity"]

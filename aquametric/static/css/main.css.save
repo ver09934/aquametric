@@ -36,19 +36,15 @@ body {
 	float: right;
 }
 
-#items *{
+#download {
 	font-family: "BebasNeue-Regular";
 	font-size: 25px;
 	padding-right: 30px;
 }
 
-#items a {
+#download a {
 	text-decoration: none;
 	color: inherit;
-}
-
-#items a:hover {
-	text-decoration: underline;
 }
 
 #main {
@@ -79,11 +75,7 @@ body {
 	flex-direction: column;
 	background-color: #ededed;
 	flex-basis: 23%; /* Changed from 20 to fit data, but neccessitated scrolling */
-	/*border-right-style: solid;
-	border-right-width: 12px;
-	border-right-color: white;*/
-	margin-right: 12px;
-	border-radius: 0px 10px 0px 0px;
+	border-right-style: s
 }
 
 /* Hide info panel scrollbars */
@@ -116,32 +108,6 @@ body {
 	border-radius: 10px;
 	color: black;
 	margin-bottom: 15px;
-	width:100%;
-}
-
-#graph-preview {
-    background-color: white;
-    padding:15px;
-    padding-top:20px;
-    margin-top:20px;
-	border-radius: 10px;
-	color: black;
-	margin-bottom: 15px;
-}
-
-#graph-preview img{
-    width:107%;
-    clip-path: inset(20% 5% 18% 7%);
-    margin: -3% -4% -4% -4%;
-    filter: brightness(1.4) contrast(5) saturate(0.8);
-}
-
-#graph-preview #cond-graph{
-    filter: brightness(1.4) contrast(5) saturate(0.8) hue-rotate(40deg);
-}
-
-.unfocused #graph-preview img{
-    filter: brightness(1.7) contrast(5) saturate(0.8) !important;
 }
 
 .fas {
@@ -152,16 +118,11 @@ body {
 	color: lightgray !important;
 }
 
-.text-center {
-	text-align: center;
-}
-
 th {
-	font-family: "Roboto";
-	font-size: 20px;
+	font-family: "BebasNeue-Regular";
+	font-size: 30px;
     text-align: left;
-    font-weight: normal;
-    padding: 3px;
+    font-weight: 10;
 }
 
 .value {
@@ -185,10 +146,6 @@ th {
 	font-size: 24px;
 }
 
-#sensorlink a:hover {
-	text-decoration: underline;
-}
-
 /* It's jank, but it does work... */
 #photo-container {
 	display: inline-table;
@@ -206,11 +163,10 @@ th {
 /* ---------- Map ---------- */
 
 #map {
-	filter: brightness(87%) contrast(125%) saturate(200%);
+	filter: saturate(250%);
 	position: inherit; top:0; bottom:0; right:0; left:0;
-	width: calc(80% - 62px);
-	height: calc(100% - 15px);
-	border-radius: 10px 0px 0px 0px;
+    width: calc(80% - 62px);
+    height: calc(100% - 15px);
 }
 
 /* ---------- Graphs ---------- */
@@ -227,20 +183,4 @@ th {
     background-color: #ededed;
     margin-bottom: 12px;
 	border-radius: 10px;
-}
-
-.range-select {
-    font-family: "Roboto";
-    padding:20px;
-    width: calc(100% - 40px);
-}
-
-.range-select p {
-    width: 100px;
-    display: inline;
-}
-
-.range-select .slider {
-    float: right;
-    width:calc(100% - 200px);
 }

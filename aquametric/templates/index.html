@@ -1,68 +1,95 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Aquametric</title>
 
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119712389-3"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'UA-119712389-3');
-	</script>
+<head>
+    <title>Aquametric</title>
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
-        <script src="https://kit.fontawesome.com/558068c264.js" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
-        <script src="{{ url_for('static', filename='js/map.js') }}"></script>
-    </head>
-    <body>
-        <div id="navbar">
-            <div id="logo"><a href="{{ url_for('home.index') }}"><img height="44" alt="logo" src="{{ url_for('static', filename='images/Aquametric-01.svg') }}"></a></div>
-            <!--
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119712389-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-119712389-3');
+    </script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <script src="https://kit.fontawesome.com/558068c264.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+        integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+        crossorigin=""></script>
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+</head>
+
+<body>
+    <div id="navbar">
+        <div id="logo"><a href="{{ url_for('home.index') }}"><img height="44" alt="logo"
+                    src="{{ url_for('static', filename='images/Aquametric-01.svg') }}"></a></div>
+        
             <div id="items">
-                <div id="download">Download Data</div>
+                <a href="https://guide.aquametric.live">Build Guide</a>
+                <a href="https://hackaday.io/project/170881">Hackaday.io Project</a>
             </div>
-            -->
-        </div>
-        <div id="main">
-            <!-- <div id="flash"></div> -->
-            <div id="info">
-                <div id="title" class="unfocused">Select a sensor</div>
-                <div id="idnum" class="unfocused">#000</div>
-                <table id="datatable" class="unfocused">
-                    <tr id="stage">
-                        <th><i class="fas fa-water unfocused"></i></th>
-                        <th>{{ data_units["stage"][0] }}</th>
-                        <th class="value"><div class="number">0</div> <div class="unit">{{ data_units["stage"][2] }}</div></th>
-                    </tr>
-                    <tr id="temp" >
-                        <th><i class="fas fa-thermometer-three-quarters unfocused"></i></th>
-                        <th>{{ data_units["temp"][0] }}</th>
-                        <th class="value"><div class="number">0</div> <div class="unit">{{ data_units["temp"][2] }}</div></th>
-                    </tr>
-                    {#
+    </div>
+    <div id="main">
+        <!-- <div id="flash"></div> -->
+        <div id="info">
+            <div id="title" class="unfocused">Select a sensor</div>
+            <div id="idnum" class="unfocused">#000</div>
+            <table id="datatable" class="unfocused">
+                <tr id="stage">
+                    <th class="text-center"><i class="fas fa-water unfocused"></i></th>
+                    <th>{{ data_units["stage"][0] }}</th>
+                    <th class="value">
+                        <div class="number">0</div>
+                        <div class="unit">{{ data_units["stage"][2] }}</div>
+                    </th>
+                </tr>
+                <tr id="temp">
+                    <th class="text-center"><i class="fas fa-thermometer-three-quarters unfocused"></i></th>
+                    <th>{{ data_units["temp"][0] }}</th>
+                    <th class="value">
+                        <div class="number">0</div>
+                        <div class="unit">{{ data_units["temp"][2] }}</div>
+                    </th>
+                </tr>
+                {#
                     <tr id="turbidity">
-                        <th><i class="fas fa-wind unfocused"></i></th>
+                        <th class="text-center"><i class="fas fa-wind unfocused"></i></th>
                         <th>{{ data_units["turbidity"][0] }}</th>
                         <th class="value"><div class="number">0</div> <div class="unit">{{ data_units["turbidity"][2] }}</div></th>
                     </tr>
-                    #}
-                    <tr id="conductivity">
-                        <th><i class="fas fa-tachometer-alt unfocused"></i></th>
-                        <th>{{ data_units["conductivity"][0] }}</th>
-                        <th class="value"><div class="number">0</div> <div class="unit">{{ data_units["conductivity"][2] }}</div></th>
-                    </tr>
-                </table>
-                <div id="sensorlink"><a class="unfocused">View Graphs</a></div>
-                <div id="photo-container">
-                    <img id="photo" src="{{ url_for('static', filename='images/sensor-placeholder.jpg') }}">
-                </div>
+                #}
+                <tr id="conductivity">
+                    <th class="text-center"><i class="fas fa-tachometer-alt unfocused"></i></th>
+                    <th>{{ data_units["conductivity"][0] }}</th>
+                    <th class="value">
+                        <div class="number">0</div>
+                        <div class="unit">{{ data_units["conductivity"][2] }}</div>
+                    </th>
+                </tr>
+            </table>
+            
+            <div id="sensorlink">
+            <a class="unfocused">
+            <div id="graph-preview" class="unfocused">
+            	<img id="stage-graph" src="/static/images/stage-placeholder.png"></img>
+            	<img id="temp-graph" src="/static/images/temp-placeholder.png"></img>
+            	<img id="cond-graph" src="/static/images/cond-placeholder.png"></img>
+            	View Graphs
             </div>
-            <div id="map"></div>
+            </a>
+            </div>
+            <div id="photo-container">
+                <img id="photo" src="{{ url_for('static', filename='images/sensor-placeholder.jpg') }}">
+            </div>
         </div>
-    </body>
+        <div id="map"></div>
+    </div>
+</body>
+
 </html>

@@ -16,3 +16,6 @@ liveconf.json
 # jupyter files
 .ipynb_checkpoints/
 
+# tmp
+venv.old/
+

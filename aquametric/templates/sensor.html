@@ -29,24 +29,24 @@
                 <div id="idnum">#{{ sensor_id }}</div>
                 <table id="datatable">
                     <tr id="stage">
-                        <th><i class="fas fa-water"></i></th>
+                        <th class="text-center"><i class="fas fa-water"></i></th>
                         <th>{{ data_units["stage"][0] }}</th>
                         <th class="value"><div class="number">{{ "{:.1f}".format(current_data["data"]["stage"]) }}</div> <div class="unit">{{ data_units["stage"][2] }}</div></th>
                     </tr>
                     <tr id="temp" >
-                        <th><i class="fas fa-thermometer-three-quarters"></i></th>
+                        <th class="text-center"><i class="fas fa-thermometer-three-quarters"></i></th>
                         <th>{{ data_units["temp"][0] }}</th>
                         <th class="value"><div class="number">{{ "{:.1f}".format(current_data["data"]["temp"]) }}</div> <div class="unit">{{ data_units["temp"][2] }}</div></th>
                     </tr>
                     {#
                     <tr id="turbidity">
-                        <th><i class="fas fa-wind"></i></th>
+                        <th class="text-center"><i class="fas fa-wind"></i></th>
                         <th>{{ data_units["turbidity"][0] }}</th>
                         <th class="value"><div class="number">{{ "{:.1f}".format(current_data["data"]["turbidity"]) }}</div> <div class="unit">{{ data_units["turbidity"][2] }}</div></th>
                     </tr>
                     #}
                     <tr id="conductivity">
-                        <th><i class="fas fa-tachometer-alt"></i></th>
+                        <th class="text-center"><i class="fas fa-tachometer-alt"></i></th>
                         <th>{{ data_units["conductivity"][0] }}</th>
                         <th class="value"><div class="number">{{ "{:.1f}".format(current_data["data"]["conductivity"]) }}</div> <div class="unit">{{ data_units["conductivity"][2] }}</div></th>
                     </tr>
@@ -56,6 +56,46 @@
                 </div>
             </div>
             <div id="grapharea">
+                <div class="graph range-select">
+                    <p>Data range: </p><p id="range-value">168</p>
+                    <input class="slider" id="range-slider" type="range" min="10" max="430" value="320">
+                    <script>
+                    
+                    	var url = new URL(window.location.href);
+                    	var hours = url.searchParams.get("hours");
+                    	
+                    	if (!url.searchParams.has("hours")) {
+                    		hours = "max";
+                    	}
+                    	
+			function displayRange(hours) {
+			var output;
+			    if (hours >= 168){
+			    	output = (hours/168).toFixed(2) + " weeks";
+			    }
+			    else if (hours >= 24){
+			    	output = (hours/24).toFixed(1) + " days";
+			    }
+			    else {
+			    	output = hours + " hours";
+			    }
+			    document.getElementById("range-value").innerHTML = output;
+			}
+
+                    	document.getElementById("range-slider").value = hours;
+                    	displayRange(hours);
+                    	
+                    	document.getElementById("range-slider").oninput = function() {
+                    	    displayRange(this.value);
+                    	}
+                    	
+                    	document.getElementById("range-slider").onchange = function() {
+                    	    url.searchParams.set("hours", this.value);
+                    	    window.location.replace(url);
+                    	}
+                    	
+                    </script>
+                </div>
                 <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field='stage', **img_args) }}"></img>
                 <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field='temp', **img_args) }}"></img>
                 <!-- <img class="graph" src="{{ url_for('data.graph', sensor_id=sensor_id, field='turbidity', **img_args) }}"></img> -->
