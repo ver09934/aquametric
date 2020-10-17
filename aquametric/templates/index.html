@@ -29,17 +29,20 @@
     <div id="navbar">
         <div id="logo"><a href="{{ url_for('home.index') }}"><img height="44" alt="logo"
                     src="{{ url_for('static', filename='images/Aquametric-01.svg') }}"></a></div>
-        
-            <div id="items">
-                <a href="https://guide.aquametric.live">Build Guide</a>
-                <a href="https://hackaday.io/project/170881">Hackaday.io Project</a>
-            </div>
+
+        <div id="items">
+            <a href="https://guide.aquametric.live">Build Guide</a>
+            <a href="https://hackaday.io/project/170881">Hackaday.io Project</a>
+        </div>
     </div>
     <div id="main">
         <!-- <div id="flash"></div> -->
         <div id="info">
             <div id="title" class="unfocused">Select a sensor</div>
             <div id="idnum" class="unfocused">#000</div>
+            <div id="photo-container">
+                <img id="photo" src="{{ url_for('static', filename='images/sensor-placeholder.jpg') }}">
+            </div>
             <table id="datatable" class="unfocused">
                 <tr id="stage">
                     <th class="text-center"><i class="fas fa-water unfocused"></i></th>
@@ -73,19 +76,16 @@
                     </th>
                 </tr>
             </table>
-            
+
             <div id="sensorlink">
-            <a class="unfocused">
-            <div id="graph-preview" class="unfocused">
-            	<img id="stage-graph" src="/static/images/stage-placeholder.png"></img>
-            	<img id="temp-graph" src="/static/images/temp-placeholder.png"></img>
-            	<img id="cond-graph" src="/static/images/cond-placeholder.png"></img>
-            	View Graphs
-            </div>
-            </a>
-            </div>
-            <div id="photo-container">
-                <img id="photo" src="{{ url_for('static', filename='images/sensor-placeholder.jpg') }}">
+                <a class="unfocused">
+                    <div id="graph-preview" class="unfocused">
+                        <img id="stage-graph" src="/static/images/stage-placeholder.png"></img>
+                        <img id="temp-graph" src="/static/images/temp-placeholder.png"></img>
+                        <img id="cond-graph" src="/static/images/cond-placeholder.png"></img>
+                        View Graphs
+                    </div>
+                </a>
             </div>
         </div>
         <div id="map"></div>

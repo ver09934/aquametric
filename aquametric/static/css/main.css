@@ -75,7 +75,6 @@ body {
 	overflow-y: scroll; /* Comment for no overflow scrolling */
 	padding: 25px;
 	padding-top: 15px;
-	display: flex;
 	flex-direction: column;
 	background-color: #ededed;
 	flex-basis: 23%; /* Changed from 20 to fit data, but neccessitated scrolling */
@@ -115,7 +114,6 @@ body {
     margin-top:20px;
 	border-radius: 10px;
 	color: black;
-	margin-bottom: 15px;
 	width:100%;
 }
 
@@ -126,7 +124,7 @@ body {
     margin-top:20px;
 	border-radius: 10px;
 	color: black;
-	margin-bottom: 15px;
+	margin-bottom: 20px;
 }
 
 #graph-preview img{
@@ -195,12 +193,11 @@ th {
 }
 
 #photo {
-	margin-top: 15px;
+	margin-top: 20px;
 	display: block;
 	width: 100%;
 	height: auto;
 	border-radius: 10px;
-	margin-bottom: 15px; /* To add a bit more scroll distance at bottom of sidebar */
 }
 
 /* ---------- Map ---------- */
@@ -219,6 +216,7 @@ th {
 	width: calc(80% - 94px);
 	overflow-y: scroll;
 	padding-right: 30px;
+	padding-bottom: 20px;
 }
 
 .graph {
@@ -243,4 +241,31 @@ th {
 .range-select .slider {
     float: right;
     width:calc(100% - 200px);
+}
+
+/* ---------- Mobile Overrides ---------- */
+
+@media only screen and (max-aspect-ratio: 1/1) {
+	#main {
+		flex-direction: column-reverse;
+	}
+
+	#info {
+		margin-right:0;
+		margin-top:12px;
+		flex-basis: 45%;
+		flex-shrink: 0;
+	}
+
+	#map {
+		width: 100%;
+	}
+
+	#grapharea {
+		width: 100%;
+		padding:30px;
+		box-sizing: border-box;
+		flex-grow: 1;
+	}
+	
 }
