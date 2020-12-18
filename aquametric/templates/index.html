@@ -39,7 +39,10 @@
         <!-- <div id="flash"></div> -->
         <div id="info">
             <div id="title" class="unfocused">Select a sensor</div>
-            <div id="idnum" class="unfocused">#000</div>
+            <div id="subtitle" class="unfocused">
+		    <div id="idnum">#000</div>
+		    <div id="last-seen"> </div>
+            </div>
             <div id="photo-container">
                 <img id="photo" src="{{ url_for('static', filename='images/sensor-placeholder.jpg') }}">
             </div>

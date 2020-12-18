@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <script src="https://kit.fontawesome.com/558068c264.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -30,7 +31,20 @@
         <!-- <div id="flash"></div> -->
         <div id="info">
             <div id="title">{{ sensor_info["prettyname"] }}</div>
-            <div id="idnum">#{{ sensor_id }}</div>
+            <div id="subtitle">
+		    <div id="idnum">#{{ sensor_id }}</div>
+		    <div id="last-seen"> </div>
+		    
+            </div>
+            <script>
+            $.ajax({url: "/data/{{ sensor_id }}/log.json?latest"}).done(function(logData) {
+                    
+                    var date = new Date(logData["published_at"]);
+                    $("#last-seen").html(" · last connected " + timeago(Date.now() - date.getTime()));
+
+                });
+                function timeago(r){var e=Math.floor(r/1e3),o=0;if(e<60)return"seconds ago";if(e<120)return"a minute ago";if(e<3600){for(;e>=60;)e-=60,o+=1;return o+" minutes ago"}if(e<7200)return"an hour ago";if(e<86400){for(;e>=3600;)e-=3600,o+=1;return o+" hours ago"}if(e<172800)return"a day ago";if(e<604800){for(;e>=172800;)e-=172800,o+=1;return o+" days ago"}if(e<1209600)return"a week ago";if(e<2592e3){for(;e>=604800;)e-=604800,o+=1;return o+" weeks ago"}if(e<5184e3)return"a month ago";if(e<31536e3){for(;e>=2592e3;)e-=2592e3,o+=1;return o+" months ago"}return e<141912e4?"more than year ago":"never"}
+            </script>
             <div id="photo-container">
                 <img id="photo" src="{{ sensor_info['img'] }}">
             </div>
@@ -72,14 +86,18 @@
             <div class="graph range-select">
                 <p>Data range: </p>
                 <p id="range-value">168</p>
-                <input class="slider" id="range-slider" type="range" min="10" max="430" value="320">
+                <input class="slider" id="range-slider" type="range" min="10" max="480" value="320">
                 <script>
-
+                    const now = new Date();
+                    const hoursSinceEpoch = Math.round(now.getTime() / 3.6e+6);
+                    const maxHours = hoursSinceEpoch - 444790;
+                    document.getElementById("range-slider").max = maxHours;
+                      
                     var url = new URL(window.location.href);
                     var hours = url.searchParams.get("hours");
-
-                    if (!url.searchParams.has("hours")) {
-                        hours = "max";
+                    if (hours == "max" || !url.searchParams.has("hours")){
+                        url.searchParams.set("hours", maxHours);
+                        window.location.replace(url);
                     }
 
                     function displayRange(hours) {
